@@ -1,15 +1,22 @@
-def variance(loaded_dataset, description, method):
-	new_df = None
-	if len(intermediate_df) != 0:
-		new_df = intermediate_df[-1].var()
-	else:
-		df_matrix = loaded_dataset.var()
+def variance(loaded_dataset, intermediate_df, description, method):
+	try: 
+		new_df = loaded_dataset.var()
+	except Exception as e: 
+		res = {
+			'output': str(e), 
+			'result': str(e), 
+			'description' : str(e),
+			'type' : "error"
+		}
+		return res
+
 	res = {
 		'output' : loaded_dataset.head(10).round(3).to_json(orient='table'),
 		'result' : new_df.round(3).to_json(orient='table'),
 		'description' : description,
 		'type' : method
 	}
-	self.intermediate_df.append(new_df.round(3))
+	intermediate_df.append(new_df.round(3))
 	return res
-res = variance(self.current_df, description, method)
+
+res = variance(self.current_df, self.intermediate_df, description, method)

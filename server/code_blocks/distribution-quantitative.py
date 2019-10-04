@@ -1,25 +1,21 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import io
-import base64
 
-def save_bytes_image(image_list):
-	bytes_image = io.BytesIO()
-	plt.savefig(bytes_image, format='png')
-	image_list.append(base64.b64encode(bytes_image.getvalue()))
-	bytes_image.seek(0)
 
 def dist_num(loaded_dataset, intermediate_df, description, method):
 	image_list = []
-	# df = None
-	# if len(intermediate_df) != 0:
-	# 	df = intermediate_df[-1]
-	# else:
-	# 	df = loaded_dataset
-
 	df = loaded_dataset
+	
+	import pandas as pd
+	import numpy as np
+	import matplotlib.pyplot as plt
+	import io
+	import base64
 
+	def save_bytes_image(image_list):
+		bytes_image = io.BytesIO()
+		plt.savefig(bytes_image, format='png')
+		image_list.append(base64.b64encode(bytes_image.getvalue()))
+		bytes_image.seek(0)
+	
 	#cols that have numerical values
 	numerical_df = df.select_dtypes(include='number')
 
@@ -31,7 +27,6 @@ def dist_num(loaded_dataset, intermediate_df, description, method):
 			'description' : "Dataframe has no numerical values",
 			'type' : "error"
 		}
-		print (res['output'])
 		return res
 
 	count = 0
@@ -52,14 +47,6 @@ def dist_num(loaded_dataset, intermediate_df, description, method):
 		'type' : method
 	}
 	intermediate_df.append(numerical_df.head(10).round(3))
-	print (res['output'])
 	return res
-
-
-
-
-df = pd.DataFrame(np.random.uniform(low=-1, high=1, size=(10, 3)), columns=['a', 'b', 'c'])
-
-df = pd.DataFrame({'a': [2, 1] * 5, 'b': [False, False] * 5,  'c': [False, False] * 5})
 
 res = dist_num(self.current_df, self.intermediate_df, description, method)

@@ -12,7 +12,6 @@ import logging
 from analysis import Analysis
 from recommender import Recommender
 
-
 app = Flask(__name__)
 
 # disable logging for data transfer
@@ -29,8 +28,6 @@ def scan_dataset():
     files = [f.split('.')[0] for f in os.listdir(data_path) if os.path.isfile(os.path.join(data_path, f))]
     return ujson.dumps(files)
 
-
-
 @app.route('/dataload')
 def data_load():
     if request.args['dataset']:
@@ -40,40 +37,6 @@ def data_load():
 
     return 'Data Loaded!'
 
-# @app.route('/calculate')
-# def calculate_intermediate(): 
-#     if request.args['compute'] == 'suggest':
-#         state = None if not request.args['state'] else request.args['state'] 
-#         # intermediate_idx = int(request.args['index'])
-#         # selected_df = analysis.intermediate_df[intermediate_idx]
-#         # analysis.current_df = selected_df; 
-#         expert_suggestions = recommender.get_manual_suggestions(state)
-#         crowd_suggestions = recommender.get_crowd_suggestions(state)
-#         all_analysis = recommender.get_analysis_list()
-#         res = {
-#             'all_analysis': all_analysis,
-#             'manual_result' : expert_suggestions,
-#             'crowd_result' : crowd_suggestions,
-#             'type' : 'suggest'
-#         }
-#     else: 
-#         # intermediate_idx = int(request.args['index'][-1])
-#         # selected_df = analysis.intermediate_df[intermediate_idx]
-
-#         print (request.args['dataframe'].__class__)
-#         print (request.args['dataframe'])
-#         analysis.intermediate_selected = True
-#         analysis.current_df = pd.read_json(request.args['dataframe'])
-#         print("current_df")
-#         print(analysis.current_df)
-#         # print ("All dfs") 
-#         # print (analysis.intermediate_df)
-#         # print ("LENGTH")
-#         # print (len(analysis.intermediate_df))
-#         result = analysis.execute_analysis(request.args['compute'], request.args['dataset'], request.args['state'])
-#         return ujson.dumps(result)
-
-
 @app.route('/compute')
 def compute():
     if request.args['compute'] == 'suggest':
@@ -81,42 +44,29 @@ def compute():
         expert_suggestions = recommender.get_manual_suggestions(state)
         crowd_suggestions = recommender.get_crowd_suggestions(state)
         
-
         # run suggested code blocks to see if an error is thrown, if so, do not include in list of expert/crowd
         # shown to user
         # to_remove = []
-        # for i,cr_analysis in enumerate(crowd_suggestions):
+        # for i, cr_analysis in enumerate(crowd_suggestions):
         #     temp_res = analysis.execute_analysis(str(cr_analysis), request.args['dataset'], state)
         #     if temp_res['type'] == 'error':
         #         to_remove.append(i)
         #     else: 
         #         analysis.intermediate_df.remove(analysis.intermediate_df[-1])
         
-        # print ("Remove: ", to_remove)
+        # print ("Remove Crowd Recommendations: ", str(to_remove))
         # crowd_suggestions = [crowd_suggestions[i] for i in range(len(crowd_suggestions)) if i not in to_remove]
 
-        # for ex_analysis in expert_suggestions:
-        #     # print(typeof(ex_analysis))
-        #     # print(ex_analysis)
+        # to_remove = []
+        # for i, ex_analysis in enumerate(expert_suggestions):
         #     temp_res = analysis.execute_analysis(str(ex_analysis), request.args['dataset'], state)
         #     if temp_res['type'] == 'error':
-        #         # print("EXPERT_ERROR") 
-        #         expert_suggestions.remove(ex_analysis)
+        #         to_remove.append(i)
         #     else: 
         #         analysis.intermediate_df.remove(analysis.intermediate_df[-1])
 
-        # for some reason this had to be run again - should clean this up later - noticed that there were still 
-        # some recs producing errors even after first check
-        # for cr_analysis in crowd_suggestions:
-        #     # print(typeof(cr_analysis))
-        #     # print(cr_analysis)
-        #     temp_res = analysis.execute_analysis(str(cr_analysis), request.args['dataset'], state)
-        #     if temp_res['type'] == 'error':
-        #         # print("CROWD_ERROR") 
-        #         crowd_suggestions.remove(cr_analysis)
-        #     else: 
-        #         analysis.intermediate_df.remove(analysis.intermediate_df[-1])
-        
+        # print("Remove Expert Recommendations: " + str(to_remove))
+        # expert_suggestions = [expert_suggestions[i] for i in range(len(expert_suggestions)) if i not in to_remove]
         
         all_analysis = recommender.get_analysis_list()
         res = {
@@ -138,11 +88,11 @@ def compute():
         # print (request.args['steps'])
         analysis.intermediate_selected = True
 
-        # if len(analysis.intermediate_df) != 0:
-        #     analysis.current_df = analysis.intermediate_df[-1]
+        if len(analysis.intermediate_df) != 0:
+            analysis.current_df = analysis.intermediate_df[-1]
 
         # print("current_df")
-        # print(analysis.current_df)
+        print(analysis.current_df)
         result = analysis.execute_analysis(request.args['compute'], request.args['dataset'], request.args['state'])
         return ujson.dumps(result)
 

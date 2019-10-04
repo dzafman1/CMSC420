@@ -1,5 +1,6 @@
 def decision_tree_classifier(loaded_dataset, intermediate_df, description, method):
 	df = loaded_dataset
+	
 	from sklearn.tree import DecisionTreeClassifier
 	from sklearn.model_selection import train_test_split
 	from pandas.api.types import is_numeric_dtype
@@ -7,6 +8,14 @@ def decision_tree_classifier(loaded_dataset, intermediate_df, description, metho
 	import pandas as pd
 
 	quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
+	if len(quantitativeColumns) == 0:
+		res = {
+			'output': "Illegal dataframe value num_col",
+			'result' : "Illegal dataframe value",
+			'description' : "Illegal dataframe value",
+			'type' : 'error'
+		}
+		return res
 	X = df[quantitativeColumns[:-1]]
 	y = df[[quantitativeColumns[-1]]].values.ravel()
 	classifier = DecisionTreeClassifier()
@@ -23,13 +32,5 @@ def decision_tree_classifier(loaded_dataset, intermediate_df, description, metho
 	}
 	intermediate_df.append(pd.DataFrame(data).head(10))
 	return res
+
 res = decision_tree_classifier(self.current_df, self.intermediate_df, description, method)
-
-# Pass: accuracy score of 2
-# df = pd.DataFrame({'a': [1, 2] * 3, 'b': [3, 3] * 3,  'c': [1.0, 2.0] * 3})
-
-# Pass: accuracy of 3 (testing different dimensions)
-# df = pd.DataFrame({'a': [1, 2] * 4, 'b': [3, 3] * 4,  'c': [1.0, 2.0] * 4})
-# r = decision_tree_classifier(df, [], "", "")
-# print(r)
-# print(df)

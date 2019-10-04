@@ -1,11 +1,10 @@
-import pandas as pd
-import numpy as np
-
-
 def bootstrap(loaded_dataset, intermediate_df, description, method):
 	#get columns that have numerical values
 
 	#check dtype of all values in dataframe
+
+	import pandas as pd
+	import numpy as np
 
 	current_df = loaded_dataset.select_dtypes('number')
 
@@ -13,19 +12,14 @@ def bootstrap(loaded_dataset, intermediate_df, description, method):
 		res = {
 			'output': "Dataframe has no numeric values", 
 			'result' : "Dataframe has no numeric values",
-			'description' : "Dataframe has no numeric values"
+			'description' : "Dataframe has no numeric values",
+			'type' : 'error'
 		}
-		print (res['output'])
 		return res
 
-	# if len(intermediate_df) != 0:
-	# 	current_df = intermediate_df[-1].select_dtypes('number')
-	# else:
-	# 	current_df = loaded_dataset.select_dtypes('number')
 	from sklearn.utils import resample
 	mean = []
 	statistics = pd.DataFrame()
-
 
 	for i in range(0, 1000):
 		boot = resample(current_df, replace=True, n_samples=int(0.5 * len(current_df.index)))
@@ -45,10 +39,6 @@ def bootstrap(loaded_dataset, intermediate_df, description, method):
 		'type' : method
 	}
 	intermediate_df.append(current_df.head(10).round(3))
-	print res['output']	
 	return res
 
-# df = pd.DataFrame(np.random.uniform(low=-1, high=1, size=(10, 3)), columns=['a', 'b', 'c'])
-
-# df = pd.DataFrame({'a': [1, 2] * 5, 'b': ["", ""] * 5,  'c': ["", ""] * 5})
 res = bootstrap(self.current_df, self.intermediate_df, description, method)

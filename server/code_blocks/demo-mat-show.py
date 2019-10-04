@@ -5,11 +5,21 @@ def demo_mat_show(loaded_dataset, intermediate_df, description, method):
 	from pandas.api.types import is_numeric_dtype
 	from sklearn.metrics import confusion_matrix
 	import pandas as pd
-	import matplotlib.pyplot as plt
 	import numpy as np
+	import matplotlib.pyplot as plt
 
 	data = {'confusion': []}
 	quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
+
+	if len(quantitativeColumns) == 0:
+		res = {
+			'output': "Dataframe needs numeric values",
+			'result': "Dataframe needs numeric values",
+			'description': "Dataframe needs numeric values",
+			'type' : 'error'
+		}
+		return res
+	
 	yy_test = df[quantitativeColumns[0]].values.ravel()
 	yy_pred = df[quantitativeColumns[1]].values.ravel()
 	confusion = confusion_matrix(yy_test, yy_pred)

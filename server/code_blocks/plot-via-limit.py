@@ -1,18 +1,18 @@
-import pandas as pd
-import numpy  as np
-import io
-import base64
-import matplotlib.pyplot as plt
-
-
-
 def plot_via_limit(loaded_dataset, intermediate_df, description, method):
 	df = loaded_dataset.select_dtypes(include='number')
 
-	# if len(intermediate_df) != 0:
-	# 	df = intermediate_df[-1].select_dtypes(include='number')
-	# else:
-	# 	df = loaded_dataset.select_dtypes(include='number')
+	import pandas as pd
+	import numpy  as np
+	import io
+	import base64
+	import matplotlib.pyplot as plt
+	
+	def save_bytes_image(image_list):
+		bytes_image = io.BytesIO()
+		plt.savefig(bytes_image, format='png')
+		image_list.append(base64.b64encode(bytes_image.getvalue()))
+		bytes_image.seek(0)
+	
 
 	if df.empty == True or len(df.columns) < 2: 
 		res = {
@@ -21,7 +21,6 @@ def plot_via_limit(loaded_dataset, intermediate_df, description, method):
 			'description' : "Dataframe has no numeric values",
 			'type' : "error"
 		}
-		print (res['output'])
 		return res
 
 	image_list = []
@@ -56,19 +55,6 @@ def plot_via_limit(loaded_dataset, intermediate_df, description, method):
 	}
 	
 	intermediate_df.append( df.head(10))
-	print(res['output'])
 	return res
-
-
-def save_bytes_image(image_list):
-	bytes_image = io.BytesIO()
-	plt.savefig(bytes_image, format='png')
-	image_list.append(base64.b64encode(bytes_image.getvalue()))
-	bytes_image.seek(0)
-
-
-# df = pd.DataFrame(np.random.uniform(low=-1, high=1, size=(10, 3)), columns=['a', 'b', 'c'])
-
-# df = pd.DataFrame({'a': [0, 1] * 5, 'b': [1, 10] * 5,  'c': [12, 13] * 5})
 
 res = plot_via_limit(self.current_df, self.intermediate_df, description, method)

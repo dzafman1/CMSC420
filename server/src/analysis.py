@@ -15,7 +15,6 @@ from scipy import stats
 import seaborn
 
 class Analysis():
-    global res_global
     def __init__(self):
         self.intermediate_df = []
         self.loaded_dataset = pd.DataFrame()
@@ -50,12 +49,6 @@ class Analysis():
         if len(self.intermediate_df) == 0:
             self.loaded_dataset = load_dataset(dataset)
             self.current_df = self.loaded_dataset
-        if self.intermediate_selected == False and len(self.intermediate_df) != 0:
-            self.current_df = self.intermediate_df[-1]
-
-        # print ("Inside Execute Analysis Function")
-        # print (self.intermediate_selected)
-        # print (self.current_df)
 
         description = ''
         #load in json file
@@ -801,28 +794,13 @@ class Analysis():
             if method in json_data[i]["user-data"]["method"]:
                 code_string = ''.join(map(str, json_data[i]['code']))
         
-        try: 
-            exec(code_string)
-            res_global = res 
-            return res_global 
-        except Exception as e:
-            # print("Error")
-            res_global = {
-                'type': 'error',
-                'description' : str(e)
-            }
-
-            # probably shouldn't use a global var - bad practice - but it works for now :)
-            return res_global
-        
-        # NOTE: this may not work for some analysis since they are not in dict yet
-        # res['code'] = code_string
-        
-        # print (len(self.intermediate_df))
-
-        # self.intermediate_selected = False
-            
-
+       
+        print ("Current Dataframe: \n")
+        print (self.current_df)
+        exec(code_string)
+                
+        print ("Response from block execution: \n")
+        return res
         
 def load_dataset(filename):
     data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)) + '/../../data/', filename + ".csv")
@@ -880,9 +858,38 @@ def performance_metric(y_true, y_predict):
     # Return the score
     return score
 
-# leilani: what is this referring to...?
 # cluster id 162
 
+def initializeClustersForKmeans(df):
+    '''Use k-means++ to initialize a good set of centroids'''
+    from pandas.api.types import is_numeric_dtype
+    from sklearn.metrics import pairwise_distances
+
+    k = 50
+    quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
+    centroids = np.zeros((k, len(quantitativeColumns)))
+    data = df[quantitativeColumns].values
+
+    # Randomly choose the first centroid.
+    # Since we have no prior knowledge, choose uniformly at random
+    idx = np.random.randint(data.shape[0])
+    centroids[0] = data[idx,:]
+    # Compute distances from the first centroid chosen to all the other data points
+    squared_distances = pairwise_distances(data, centroids[0:1], metric='euclidean').flatten()**2
+        
+    for i in xrange(1, k):
+        # Choose the next centroid randomly, so that the probability for each data point to be chosen
+        # is directly proportional to its squared distance from the nearest centroid.
+        # Roughtly speaking, a new centroid should be as far as from ohter centroids as possible.
+        idx = np.random.choice(data.shape[0], 1, p=squared_distances/sum(squared_distances))
+        centroids[i] = data[idx,:]
+        # Now compute distances from the centroids to all data points
+        squared_distances = np.min(pairwise_distances(data, centroids[0:i+1], metric='euclidean')**2,axis=1)
+        
+    final = {}
+    for i,c in enumerate(quantitativeColumns):
+        final[c] = centroids[:,i]
+    return pd.DataFrame(final)
 
 def calcConditionalFreqDist(df):
     import nltk
@@ -903,24 +910,24 @@ def calcConditionalFreqDist(df):
 # from keras.preprocessing.text import Tokenizer
 # from gensim.models import word2vec
 
-# def calcWordVec(df):
-# 	texts = df.select_dtypes(include='object')
+def calcWordVec(df):
+	texts = df.select_dtypes(include='object')
 
-# 	MAX_NB_WORDS = 5000
-# 	EMBEDDING_DIM = 100
+	MAX_NB_WORDS = 5000
+	EMBEDDING_DIM = 100
 	
-# 	tokenizer = Tokenizer(nb_words=MAX_NB_WORDS)
-# 	sequences = tokenizer.texts_to_sequences(texts)
-# 	word_index = tokenizer.word_index
+	tokenizer = Tokenizer(nb_words=MAX_NB_WORDS)
+	sequences = tokenizer.texts_to_sequences(texts)
+	word_index = tokenizer.word_index
 
-#   	nb_words = min(MAX_NB_WORDS, len(word_index))+1
+  	nb_words = min(MAX_NB_WORDS, len(word_index))+1
 
-# 	embedding_matrix = np.zeros((nb_words, EMBEDDING_DIM))
-# 	for word, i in word_index.items():
-#     		if word in word2vec.vocab:
-#         		embedding_matrix[i] = word2vec.word_vec(word)
-# 	print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
+	embedding_matrix = np.zeros((nb_words, EMBEDDING_DIM))
+	for word, i in word_index.items():
+    		if word in word2vec.vocab:
+        		embedding_matrix[i] = word2vec.word_vec(word)
+	print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
 
-# 	data = {"wordvec":[]}
-# 	data['wordvec'].append(np.sum(np.sum(embedding_matrix, axis=1) == 0))
-# 	return pd.DataFrame(data)
+	data = {"wordvec":[]}
+	data['wordvec'].append(np.sum(np.sum(embedding_matrix, axis=1) == 0))
+	return pd.DataFrame(data)

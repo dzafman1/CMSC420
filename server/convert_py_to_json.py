@@ -36,6 +36,9 @@ def modifyDictionary(dFile, dJson):
     with open('dictionary_tmp.json', 'w') as outfile:
         json.dump(modifiedDictionary, outfile)
 
+    os.remove('dictionary.json')
+    os.rename('dictionary_tmp.json', 'dictionary.json')
+
 
 def convert_py_to_json(pyfile):
     code = []

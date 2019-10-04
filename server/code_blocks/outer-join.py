@@ -1,14 +1,8 @@
-import panas as pd
-import numpy as np
-
-
 def outer_join(loaded_dataset, intermediate_df, description, method):
 	df1 = loaded_dataset
 
-	# if len(intermediate_df) != 0:
-	# 	df1 = intermediate_df[-1]
-	# else:
-	# 	df1 = loaded_dataset
+	import panas as pd
+	import numpy as np
 
 	res = {
 		'output': df1.head(10).to_json(orient='table'),

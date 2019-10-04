@@ -1,11 +1,30 @@
-def stack_ftgrid(loaded_dataset, description, method):
-	df = None
-	if len(intermediate_df) != 0:
-		df = intermediate_df[-1]
-	else:
-		df = loaded_dataset
+def stack_ftgrid(loaded_dataset, intermediate_df, description, method):
+	df = loaded_dataset
+
+	import matplotlib.pyplot as plt
+	import seaborn
+	import io
+	import base64
+
+	def save_bytes_image(image_list):
+		bytes_image = io.BytesIO()
+		plt.savefig(bytes_image, format='png')
+		image_list.append(base64.b64encode(bytes_image.getvalue()))
+		bytes_image.seek(0)
+	
+
 	numerical_cols = df.select_dtypes(include='number').columns
 	category_cols = df.select_dtypes(include='object').columns
+
+	if (len(numerical_cols) == 0 OR len(category_cols) == 0):
+		res = {
+			'output': "Dataframe has no numeric or cateogry values", 
+			'result': "Dataframe has no numeric or category values", 
+			'description' : "Dataframe has no numeric or category values",
+			'type' : "error"
+		}
+		return res
+	
 	image_list = []
 	for cat_var in category_cols:
 		if df[cat_var].value_counts().count() <= 5:
@@ -27,5 +46,5 @@ def stack_ftgrid(loaded_dataset, description, method):
 	}
 	intermediate_df.append(df.head(10).round(3))
 	return res
-res = stack_ftgrid(self.current_df, description, method)
-self.intermediate_df.append(self.current_df)
+
+res = stack_ftgrid(self.current_df, self.intermediate_df, description, method)

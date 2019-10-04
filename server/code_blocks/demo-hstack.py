@@ -1,13 +1,20 @@
 def demo_hstack(loaded_dataset, intermediate_df, description, method):
 	df = loaded_dataset
+
 	from pandas.api.types import is_numeric_dtype
 	import numpy as np
 	import pandas as pd
+	
 	quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
 
 	if len(quantitativeColumns) == 0:
-		raise ValueError('no numeric type found')
-
+		res = {
+			'output': "Dataframe needs numeric values",
+			'result': "Dataframe needs numeric values",
+			'description': "Dataframe needs numeric values",
+			'type': 'error'
+		}
+		return res
 	x = df[quantitativeColumns[0]].values.ravel()
 	y = df[quantitativeColumns[1]].values.ravel()
 	x1 = 1 / x

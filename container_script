@@ -1,0 +1,15 @@
+#!/bin/bash
+
+apt-get remove node
+apt-get remove npm 
+npm uninstall polymer-cli 
+which node
+which npm
+
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+
+
+nvm install node
+npm install -g polymer-cli -unsafe-perm
+

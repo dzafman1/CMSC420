@@ -1,13 +1,31 @@
 def plot(loaded_dataset, intermediate_df, description, method):
-	df = None
-	if len(intermediate_df) != 0:
-		df = intermediate_df[-1]
-	else:
-		df_matrix = loaded_dataset
+	df = loaded_dataset
 	image_list = []
+
 	import matplotlib.gridspec as gridspec
+	import numpy as np
+	import io
+	import base64
+	import matplotlib.pyplot as plt
+
+	def save_bytes_image(image_list):
+		bytes_image = io.BytesIO()
+		plt.savefig(bytes_image, format='png')
+		image_list.append(base64.b64encode(bytes_image.getvalue()))
+		bytes_image.seek(0)
+	
 	samples = dict()
 	alt_df = df.select_dtypes(include='number')
+
+	if (alt_df.empty == True):
+		res = {
+			'output': "Dataframe has no numeric values", 
+			'result': "Dataframe has no numeric values", 
+			'description' : "Dataframe has no numeric values",
+			'type' : "error"
+		}
+		return res
+
 	h, w = alt_df.shape
 	for a in np.arange(h):
 		samples[a] = ((alt_df.iloc[[a]].values).ravel())[:4]
@@ -32,4 +50,5 @@ def plot(loaded_dataset, intermediate_df, description, method):
 	}
 	intermediate_df.append(df.head(10))
 	return res
+
 res = plot(self.current_df, self.intermediate_df, description, method)

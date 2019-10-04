@@ -1,0 +1,14 @@
+Huaishu Peng Discussion:
+
+technical HCI is one of primary interests
+Innovation on fabrication in 3D printing
+how to make it interactive
+trying to make printing interactive
+ongoing - trying to look into wall climbing robot - what kind of interactive operations can we have there
+challenges - how to make things stay on wall, be quiet, nimble and responsive to env and human
+shape changing interfacaes - similar to hiroshi ishii - make env adaptive to users
+
+laser cutter origami
+
+3d modeling using cad softare or clay or leggo
+can i think of how people with visual impairments can design 3d visual or digital shapes

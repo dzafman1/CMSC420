@@ -551,16 +551,14 @@
       deleteDownstream(e) {
         //first check if selected > 1 - if so then set timeout for x secs and delete from the all tabs list 
         //check first here
-        ////if true - delete tabs within a time out function here 
+        //if true - delete tabs within a time out function here 
         var self = this;
         var elementList = self.shadowRoot.querySelector('app-header-layout').children;
-
         var tab_id = e.path[0].id;
 
         console.log("TAB ID: " + tab_id);
 
         var tab_num = parseInt(tab_id[tab_id.length - 1]);
-
         var current_suggest_tab = this.shadowRoot.getElementById(tab_id);
         console.log("TAB CHILDREN: " + current_suggest_tab.numberOfRecsSelected);
 
@@ -592,38 +590,6 @@
           };
           requestElement.generateRequest();
         }
-
-        // if (current_suggest_tab.numberOfRecsSelected > 1) {
-        //   for (var i = 0; i < self.allTabsList.length; i++) {
-        //     var last_char_num = parseInt(self.allTabsList[i].id[self.allTabsList[i].id.length-1]);
-        //     var last_num = parseInt(self.allTabsList[self.allTabsList.length-1].id[self.allTabsList[self.allTabsList.length-1].id.length-1]);
-        //     console.log("THE LAST NUMBER: ");
-        //     console.log(last_num);
-        //     if (last_char_num > tab_num && last_char_num < last_num-1) {
-        //         self.numberOfSteps -= 1; 
-        //         self.shadowRoot.getElementById(self.allTabsList[i].id).remove();
-        //     }
-        // }
-        // }
-
-        // if (current_suggest_tab.numberOfRecsSelected > 1) {
-        //   console.log("all tabs: ")
-        //   for (var i = 0; i < self.allTabsList.length; i++) {
-        //     var last_char_num = parseInt(self.allTabsList[i].id[self.allTabsList[i].id.length-1]);
-        //     var last_num = parseInt(self.allTabsList[self.allTabsList.length-1].id[self.allTabsList[self.allTabsList.length-1].id.length-1]);
-        //     console.log("THE LAST NUMBER: ");
-        //     console.log(last_num);
-        //     if (last_char_num > tab_num && last_char_num < last_num) {
-        //       setTimeout(function() {
-        //         this.shadowRoot.getElementById(self.allTabsList[i].id).remove();
-        //       }, 2000);
-        //     }
-        //   }
-
-        //   console.log(self.allTabsList);
-        // }
-
-        //if this tab has more than 1 rec already selected - this means that the user went back and selected another rec
       }
 
       datasetChanged(e) {

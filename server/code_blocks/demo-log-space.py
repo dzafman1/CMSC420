@@ -1,4 +1,3 @@
-
 def demo_log_space(loaded_dataset, intermediate_df, description, method):
 	df = loaded_dataset	
 	
@@ -9,7 +8,13 @@ def demo_log_space(loaded_dataset, intermediate_df, description, method):
 	quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
 
 	if len(quantitativeColumns) == 0:
-		raise ValueError('no numeric type found')
+		res = {
+			'output': "Dataframe needs numeric values",
+			'result': "Dataframe needs numeric values",
+			'description': "Dataframe needs numeric values",
+			'type' : 'error'
+		}
+		return res
 
 	X = df[quantitativeColumns[:-1]]
 	y = df[[quantitativeColumns[-1]]].values.ravel()
