@@ -1,0 +1,22 @@
+def test_linear_regression(loaded_datset, intermediate_df, description, method):
+	from sklearn.linear_model import LinearRegression
+	from sklearn.model_selection import cross_val_score
+	from pandas.api.types import is_numeric_dtype
+	linear_regression = LinearRegression()
+	df = None
+	if len(intermediate_df) != 0:
+		df = intermediate_df[-1]
+	else:
+		df = loaded_dataset
+	quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
+	data = df[quantitativeColumns[:-1]]
+	target = df[[quantitativeColumns[-1]]].values
+	res = {
+	'output': pd.DataFrame(cross_val_score(linear_regression, data, target, cv=10)).to_json(orient='table'),
+	'result': pd.DataFrame(cross_val_score(linear_regression, data, target, cv=10)).to_json(orient='table'),
+	'description' : description,
+	'type': method
+	}
+	intermediate_df.append(pd.DataFrame(cross_val_score(linear_regression, data, target, cv=10)))
+	return res
+res = test_linear_regression(self.current_df, self.intermediate_df, description, method

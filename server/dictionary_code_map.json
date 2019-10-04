@@ -1,0 +1,178 @@
+[
+    {
+        "id": "150",
+        "path": "compute-covariance-matrix.py"
+    },
+    {
+        "id": "36",
+        "path": "word-to-vec.py"
+    },
+    {
+        "id": "183",
+        "path": "conditional-frequence-distribution.py"
+    },
+    {
+        "id": "162",
+        "path": "initialize_kmeans_cluster.py"
+    },
+    {
+        "id": "103",
+        "path": "decision-tree-regressor.py"
+    },
+    {
+        "id": "90",
+        "path": "demo-mat-show.py"
+    },
+    {
+        "id": "43",
+        "path": "plot.py"
+    },
+    {
+        "id": "32",
+        "path": "outer-join.py"
+    },
+    {
+        "id": "6",
+        "path": "quantitative-bar-plot.py"
+    },
+    {
+        "id": "4",
+        "path": "plot-via-limit.py"
+    },
+    {
+        "id": "83",
+        "path": "probability-density-plot.py"
+    },
+    {
+        "id": "72",
+        "path": "demo-log-space.py"
+    },
+    {
+        "id": "56",
+        "path": "unique-column-values.py"
+    },
+    {
+        "id": "55",
+        "path": "extra-trees-classifier.py"
+    },
+    {
+        "id": "33",
+        "path": "demo-hstack.py"
+    },
+    {
+        "id": "27",
+        "path": "decision-tree-classifier.py"
+    },
+    {
+        "id": "134",
+        "path": "compute-percentiles-range.py"
+    },
+    {
+        "id": "30",
+        "path": "random-forest-classifier.py"
+    },
+    {
+        "id": "18",
+        "path": "eval-model-predictions.py"
+    },
+    {
+        "id": "113",
+        "path": "test-linear-regression.py"
+    },
+    {
+        "id": "10",
+        "path": "matrix-norm.py"
+    },
+    {
+        "id": "bootstrap",
+        "path": "bootstrap.py"
+    },
+    {
+        "id": "ANOVA-Variance-Analysis",
+        "path": "ANOVA-Variance-Analysis.py"
+    },
+    {
+        "id": "drop-NaN-rows",
+        "path": "drop-NaN-rows.py"
+    },
+    {
+        "id": "ranksum-test",
+        "path": "ranksum-test.py"
+    },
+    {
+        "id": "variance",
+        "path": "variance.py"
+    },
+    {
+        "id": "mean",
+        "path": "mean.py"
+    },
+    {
+        "id": "predict-test",
+        "path": "predict-test.py"
+    },
+    {
+        "id": "fit-decision-tree",
+        "path": "fit-decision-tree.py"
+    },
+    {
+        "id": "shuffle-split",
+        "path": "shuffle-split.py"
+    },
+    {
+        "id": "numerical-boxplot",
+        "path": "numerical-boxplot.py"
+    },
+    {
+        "id": "top5categories",
+        "path": "top5categories.py"
+    },
+    {
+        "id": "48",
+        "path": "drop-NaN-columns.py"
+    },
+    {
+        "id": "distribution-quantitative-category",
+        "path": "distribution-quantitative-category.py"
+    },
+    {
+        "id": "distribution-two-categories",
+        "path": "distribution-two-categories.py"
+    },
+    {
+        "id": "category-boxplot",
+        "path": "category-boxplot.py"
+    },
+    {
+        "id": "correlation-heatmap",
+        "path": "correlation-heatmap.py"
+    },
+    {
+        "id": "stack-facetgrid",
+        "path": "stack-facetgrid.py"
+    },
+    {
+        "id": "scatterplot-regression",
+        "path": "scatterplot-regression.py"
+    },
+    {
+        "id": "63",
+        "path": "distribution-quantitative.py"
+    },
+    {
+        "id": "category-count",
+        "path": "category-count.py"
+    },
+    {
+        "id": "corr",
+        "path": "correlation.py"
+    },
+    {
+        "id": "50",
+        "path": "group-statistics.py"
+    },
+    {
+        "id": "firstTen",
+        "path": "first10samples.py"
+    }
+]

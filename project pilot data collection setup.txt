@@ -1,0 +1,50 @@
+android app to gather accelerometer and audio data
+two enabled devices mounted on each hand
+might want a camera to know if user missed a step in narration - talk to mayank about this need
+all test run actions are scripted - narration will be different across diff users
+
+Devices: 
+Android smartphone - Physics Toolbox Sensor Suite for accelerometer data
+Android smartphone - Easy Voice Recorder for audio data
+
+Both devices mounted on user's right and left forearm using phone armband
+**Might want to have another person come and start both phones simultaneously for data recording to reduce lag 
+
+*User should narrate steps naturally as they run through the script*
+
+#1
+
+Sandwich - fridge, wrapping, chopping, cutlery 
+
+open fridge 
+take bread out 
+open package 
+take two slices out 
+cut crusts
+get peanut butter
+open jar
+get spreading knife
+get peanut butter on knife
+spread onto one slice of bread
+
+repeat above with jelly
+
+#2
+
+Tea - stove, water, pouring, microwave, faucet
+wim
+take cup 
+turn faucet on
+wash cup 
+turn faucet off
+
+pour water
+get teabag
+place teabag in water
+open microwave
+microwave water 
+
+wait until microwave sounds alarm
+open microwave
+
+
