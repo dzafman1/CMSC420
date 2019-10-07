@@ -1,5 +1,6 @@
-class CodeBlock(): 
-    def anova_variance(loaded_dataset, intermediate_df, description, method):
+class CodeBlock():
+
+    def anova_variance(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         from pandas.api.types import is_string_dtype
@@ -71,7 +72,7 @@ class CodeBlock():
 
         return res
     
-    def bootstrap(loaded_dataset, intermediate_df, description, method):
+    def bootstrap(self, loaded_dataset, intermediate_df, description, method):
         #get columns that have numerical values
 
         #check dtype of all values in dataframe
@@ -114,7 +115,7 @@ class CodeBlock():
         intermediate_df.append(current_df.head(10).round(3))
         return res
     
-    def cat_boxplot(loaded_dataset, intermediate_df, description, method):
+    def cat_boxplot(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -169,7 +170,7 @@ class CodeBlock():
         return res
     
 
-    def cat_count(loaded_dataset, intermediate_df, description, method):
+    def cat_count(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -226,7 +227,7 @@ class CodeBlock():
         return res
 
 
-    def compute_covariance_matrix(loaded_dataset, intermediate_df, description, method):
+    def compute_covariance_matrix(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -245,7 +246,6 @@ class CodeBlock():
 
         df = loaded_dataset.select_dtypes(include='number')
 
-
         if df.empty == True or df.isnull().values.all() == True: 
             res = {
                 'output': "Dataframe has no numeric values", 
@@ -254,8 +254,6 @@ class CodeBlock():
                 'type' : 'error'
             }
             return res
-
-
 
         # convert numerical columns in df to matrix representation
         
@@ -291,9 +289,8 @@ class CodeBlock():
 
         intermediate_df.append(pd.DataFrame(data))
         return res
-
     
-    def compute_percentiles_range(loaded_dataset, intermediate_df, description, method):
+    def compute_percentiles_range(self, loaded_dataset, intermediate_df, description, method):
         from pandas.api.types import is_numeric_dtype
         import pandas as pd
         import numpy as np
@@ -326,7 +323,7 @@ class CodeBlock():
         return res
 
     
-    def conditional_frequence_distribution(loaded_dataset, intermediate_df, description, method):
+    def conditional_frequence_distribution(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         import nltk
@@ -371,7 +368,7 @@ class CodeBlock():
         return res
 
     
-    def corr_heatmap(loaded_dataset, intermediate_df, description, method):
+    def corr_heatmap(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         import matplotlib.pyplot as plt
         import seaborn
@@ -400,8 +397,7 @@ class CodeBlock():
         return res
 
     
-
-    def corr(loaded_dataset, intermediate_df, description, method):
+    def corr(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         #Do we need this check ?
@@ -447,7 +443,7 @@ class CodeBlock():
         intermediate_df.append(correlations.round(3))
         return res
 
-    def decision_tree_classifier(loaded_dataset, intermediate_df, description, method):
+    def decision_tree_classifier(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         
         from sklearn.tree import DecisionTreeClassifier
@@ -494,7 +490,7 @@ class CodeBlock():
     
 
 
-    def decision_tree_regressor(loaded_dataset, intermediate_df, description, method):
+    def decision_tree_regressor(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         from sklearn.tree import DecisionTreeRegressor
         from pandas.api.types import is_numeric_dtype
@@ -539,7 +535,7 @@ class CodeBlock():
         return res
 
     
-    def demo_hstack(loaded_dataset, intermediate_df, description, method):
+    def demo_hstack(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         from pandas.api.types import is_numeric_dtype
@@ -572,7 +568,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame([u, v]).head(10))
         return res
 
-    def demo_log_space(loaded_dataset, intermediate_df, description, method):
+    def demo_log_space(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset	
         
         from pandas.api.types import is_numeric_dtype
@@ -1570,7 +1566,7 @@ class CodeBlock():
         numerical_cols = df.select_dtypes(include='number').columns
         category_cols = df.select_dtypes(include='object').columns
 
-        if (len(numerical_cols) == 0 OR len(category_cols) == 0):
+        if (len(numerical_cols) == 0 or len(category_cols) == 0):
             res = {
                 'output': "Dataframe has no numeric or cateogry values", 
                 'result': "Dataframe has no numeric or category values", 
@@ -1753,73 +1749,3 @@ class CodeBlock():
         }
         intermediate_df.append(res_df.head(10))
         return res
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
