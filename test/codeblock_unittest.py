@@ -211,8 +211,6 @@ class TestCrowdBlocks(unittest.TestCase):
         res = decision_tree_classifier(self.df10, [], "", "")
         self.assertEqual(null_res['result'], "Null Dataframe needs numeric values")
 
-
-
     def test_nan_cols(self):
         res = drop_cols(self.df3, [], "", "")
         df = self.converter(res['result'])
