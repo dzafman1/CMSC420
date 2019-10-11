@@ -1,5 +1,108 @@
-class CodeBlock(): 
-    def anova_variance(loaded_dataset, intermediate_df, description, method):
+from sklearn.metrics import r2_score
+
+class CodeBlock:
+    def save_bytes_image(self, image_list):
+        import io
+        from matplotlib import plot as plt
+        import base64
+
+        bytes_image = io.BytesIO()
+        plt.savefig(bytes_image, format='png')
+        image_list.append(base64.b64encode(bytes_image.getvalue()))
+        bytes_image.seek(0)
+
+    def performance_metric(self, y_true, y_predict):
+        """ Calculates and returns the performance score between 
+            true and predicted values based on the metric chosen. """
+        # TODO: Calculate the performance score between 'y_true' and 'y_predict'
+        score = r2_score(y_true,y_predict)
+        
+        # Return the score
+        return score
+
+    # cluster id 162
+
+    def initializeClustersForKmeans(self, df):
+        '''Use k-means++ to initialize a good set of centroids'''
+        from pandas.api.types import is_numeric_dtype
+        from sklearn.metrics import pairwise_distances
+        import numpy as np
+        import pandas as pd
+
+        k = 50
+        quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
+        centroids = np.zeros((k, len(quantitativeColumns)))
+        data = df[quantitativeColumns].values
+
+        # Randomly choose the first centroid.
+        # Since we have no prior knowledge, choose uniformly at random
+        idx = np.random.randint(data.shape[0])
+        centroids[0] = data[idx,:]
+        # Compute distances from the first centroid chosen to all the other data points
+        squared_distances = pairwise_distances(data, centroids[0:1], metric='euclidean').flatten()**2
+            
+        for i in xrange(1, k):
+            # Choose the next centroid randomly, so that the probability for each data point to be chosen
+            # is directly proportional to its squared distance from the nearest centroid.
+            # Roughtly speaking, a new centroid should be as far as from ohter centroids as possible.
+            idx = np.random.choice(data.shape[0], 1, p=squared_distances/sum(squared_distances))
+            centroids[i] = data[idx,:]
+            # Now compute distances from the centroids to all data points
+            squared_distances = np.min(pairwise_distances(data, centroids[0:i+1], metric='euclidean')**2,axis=1)
+            
+        final = {}
+        for i,c in enumerate(quantitativeColumns):
+            final[c] = centroids[:,i]
+        return pd.DataFrame(final)
+
+    def calcConditionalFreqDist(self, df):
+        import nltk
+        import pandas as pd
+
+        # words = ['can', 'could', 'may', 'might', 'must', 'will']
+        words = (df.select_dtypes(include='object').values).ravel()
+        genres = ['adventure', 'romance', 'science_fiction']
+        
+        cfdist = nltk.ConditionalFreqDist(
+                    (genre, word)
+                    for genre in genres
+                    for word in nltk.corpus.brown.words(categories=genre)
+                    if word in words)
+
+        data = {'conditionalDist': cfdist}
+        return pd.DataFrame(data)
+
+    # from keras.preprocessing.text import Tokenizer
+    # from gensim.models import word2vec
+
+    def calcWordVec(self, df):
+        import numpy as np
+        import Tokenizer
+        import pandas as pd
+        import word2vec
+
+        texts = df.select_dtypes(include='object')
+
+        MAX_NB_WORDS = 5000
+        EMBEDDING_DIM = 100
+        
+        tokenizer = Tokenizer(nb_words=MAX_NB_WORDS)
+        sequences = tokenizer.texts_to_sequences(texts)
+        word_index = tokenizer.word_index
+
+        nb_words = min(MAX_NB_WORDS, len(word_index))+1
+
+        embedding_matrix = np.zeros((nb_words, EMBEDDING_DIM))
+        for word, i in word_index.items():
+                if word in word2vec.vocab:
+                    embedding_matrix[i] = word2vec.word_vec(word)
+        print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
+
+        data = {"wordvec":[]}
+        data['wordvec'].append(np.sum(np.sum(embedding_matrix, axis=1) == 0))
+        return pd.DataFrame(data)      
+
+    def anova_variance(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         from pandas.api.types import is_string_dtype
@@ -71,7 +174,7 @@ class CodeBlock():
 
         return res
     
-    def bootstrap(loaded_dataset, intermediate_df, description, method):
+    def bootstrap(self, loaded_dataset, intermediate_df, description, method):
         #get columns that have numerical values
 
         #check dtype of all values in dataframe
@@ -114,7 +217,7 @@ class CodeBlock():
         intermediate_df.append(current_df.head(10).round(3))
         return res
     
-    def cat_boxplot(loaded_dataset, intermediate_df, description, method):
+    def cat_boxplot(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -169,7 +272,7 @@ class CodeBlock():
         return res
     
 
-    def cat_count(loaded_dataset, intermediate_df, description, method):
+    def cat_count(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -226,7 +329,7 @@ class CodeBlock():
         return res
 
 
-    def compute_covariance_matrix(loaded_dataset, intermediate_df, description, method):
+    def compute_covariance_matrix(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -245,7 +348,6 @@ class CodeBlock():
 
         df = loaded_dataset.select_dtypes(include='number')
 
-
         if df.empty == True or df.isnull().values.all() == True: 
             res = {
                 'output': "Dataframe has no numeric values", 
@@ -254,8 +356,6 @@ class CodeBlock():
                 'type' : 'error'
             }
             return res
-
-
 
         # convert numerical columns in df to matrix representation
         
@@ -291,9 +391,8 @@ class CodeBlock():
 
         intermediate_df.append(pd.DataFrame(data))
         return res
-
     
-    def compute_percentiles_range(loaded_dataset, intermediate_df, description, method):
+    def compute_percentiles_range(self, loaded_dataset, intermediate_df, description, method):
         from pandas.api.types import is_numeric_dtype
         import pandas as pd
         import numpy as np
@@ -326,7 +425,7 @@ class CodeBlock():
         return res
 
     
-    def conditional_frequence_distribution(loaded_dataset, intermediate_df, description, method):
+    def conditional_frequence_distribution(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         import nltk
@@ -371,7 +470,7 @@ class CodeBlock():
         return res
 
     
-    def corr_heatmap(loaded_dataset, intermediate_df, description, method):
+    def corr_heatmap(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         import matplotlib.pyplot as plt
         import seaborn
@@ -400,8 +499,7 @@ class CodeBlock():
         return res
 
     
-
-    def corr(loaded_dataset, intermediate_df, description, method):
+    def corr(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         #Do we need this check ?
@@ -447,7 +545,7 @@ class CodeBlock():
         intermediate_df.append(correlations.round(3))
         return res
 
-    def decision_tree_classifier(loaded_dataset, intermediate_df, description, method):
+    def decision_tree_classifier(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         
         from sklearn.tree import DecisionTreeClassifier
@@ -494,7 +592,7 @@ class CodeBlock():
     
 
 
-    def decision_tree_regressor(loaded_dataset, intermediate_df, description, method):
+    def decision_tree_regressor(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         from sklearn.tree import DecisionTreeRegressor
         from pandas.api.types import is_numeric_dtype
@@ -539,7 +637,7 @@ class CodeBlock():
         return res
 
     
-    def demo_hstack(loaded_dataset, intermediate_df, description, method):
+    def demo_hstack(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         from pandas.api.types import is_numeric_dtype
@@ -572,7 +670,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame([u, v]).head(10))
         return res
 
-    def demo_log_space(loaded_dataset, intermediate_df, description, method):
+    def demo_log_space(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset	
         
         from pandas.api.types import is_numeric_dtype
@@ -604,7 +702,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(data).head(10))
         return res
 
-    def demo_mat_show(loaded_dataset, intermediate_df, description, method):
+    def demo_mat_show(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         image_list = []
 
@@ -660,10 +758,12 @@ class CodeBlock():
         return res
 
     
-    def dist_quant_category(loaded_dataset, intermediate_df, description, method):
+    def dist_quant_category(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd 
         import seaborn
         import matplotlib.pyplot as plt
+        import io
+        import base64
 
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
@@ -713,7 +813,7 @@ class CodeBlock():
         return res
 
     
-    def dist_two_categories(loaded_dataset, intermediate_df, description, method):
+    def dist_two_categories(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         import itertools
@@ -766,7 +866,7 @@ class CodeBlock():
     
 
 
-    def dist_num(loaded_dataset, intermediate_df, description, method):
+    def dist_num(self, loaded_dataset, intermediate_df, description, method):
         image_list = []
         df = loaded_dataset
         
@@ -817,7 +917,7 @@ class CodeBlock():
 
     
 
-    def drop_cols(loaded_dataset, intermediate_df, description, method):
+    def drop_cols(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
 
@@ -848,7 +948,7 @@ class CodeBlock():
         intermediate_df.append(df2.describe().round(3))
         return res
 
-    def drop_rows(loaded_dataset, intermediate_df, description, method):
+    def drop_rows(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         
@@ -873,7 +973,7 @@ class CodeBlock():
         intermediate_df.append(new_df.head(10).round(3))
         return res
 
-    def eval_model_predictions(loaded_dataset, intermediate_df, description, method):
+    def eval_model_predictions(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
 
@@ -898,7 +998,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(np.equal(predictions,labels)))
         return res
 
-    def extra_trees_classifier(loaded_dataset, intermediate_df, description, method):
+    def extra_trees_classifier(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         
         from sklearn.ensemble import ExtraTreesClassifier
@@ -937,7 +1037,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(scores))
         return res
 
-    def firstTen(loaded_dataset, intermediate_df, description, method): 
+    def firstTen(self, loaded_dataset, intermediate_df, description, method): 
         df = loaded_dataset
 
         samples = df.head(10)
@@ -950,7 +1050,7 @@ class CodeBlock():
         intermediate_df.append(samples.round(3))
         return res
 
-    def fit_decision_tree(loaded_dataset, intermediate_df, description, method):
+    def fit_decision_tree(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         from sklearn.tree import DecisionTreeRegressor
@@ -1017,7 +1117,7 @@ class CodeBlock():
         intermediate_df.append(y_train.head(10).round(3))
         return res
 
-    def des(loaded_dataset, intermediate_df, description, method): 
+    def des(self, loaded_dataset, intermediate_df, description, method): 
         descriptive_statistics = loaded_dataset.describe(include='all')
         res = {
             'result' : descriptive_statistics.round(3).to_json(orient='table'),
@@ -1028,7 +1128,7 @@ class CodeBlock():
         intermediate_df.append(descriptive_statistics.round(3))
         return res
     
-    def initialize_kmeans_cluster(loaded_dataset, intermediate_df, description, method):
+    def initialize_kmeans_cluster(self, loaded_dataset, intermediate_df, description, method):
         df= loaded_dataset
         try:
             res_df = initializeClustersForKmeans(df)
@@ -1051,7 +1151,7 @@ class CodeBlock():
         intermediate_df.append(df.head(10))
         return res
 
-    def matrix_norm(loaded_dataset, intermediate_df, description, method):
+    def matrix_norm(self, loaded_dataset, intermediate_df, description, method):
 
         df = loaded_dataset
 
@@ -1089,7 +1189,7 @@ class CodeBlock():
     
 
     #test this with non umeric values - then check if needed
-    def mean(loaded_dataset, intermediate_df, description, method):
+    def mean(self, loaded_dataset, intermediate_df, description, method):
 
         df = loaded_dataset.select_dtypes(include='number')
 
@@ -1116,7 +1216,7 @@ class CodeBlock():
         intermediate_df.append(new_df.round(3))
         return res
 
-    def num_boxplot(loaded_dataset, intermediate_df, description, method):
+    def num_boxplot(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         import pandas as pd
         import numpy as np
@@ -1124,12 +1224,6 @@ class CodeBlock():
         import base64
         import seaborn as seaborn
         import matplotlib.pyplot as plt
-
-        def save_bytes_image(image_list):
-            bytes_image = io.BytesIO()
-            plt.savefig(bytes_image, format='png')
-            image_list.append(base64.b64encode(bytes_image.getvalue()))
-            bytes_image.seek(0)
         
         numerical_cols = df.select_dtypes(include='number').columns
 
@@ -1161,7 +1255,7 @@ class CodeBlock():
         intermediate_df.append(df.select_dtypes(include='number').head(10).round(3))
         return res
 
-    def outer_join(loaded_dataset, intermediate_df, description, method):
+    def outer_join(self, loaded_dataset, intermediate_df, description, method):
         df1 = loaded_dataset
 
         import panas as pd
@@ -1178,7 +1272,7 @@ class CodeBlock():
         return res
 
 
-    def plot_via_limit(loaded_dataset, intermediate_df, description, method):
+    def plot_via_limit(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset.select_dtypes(include='number')
 
         import pandas as pd
@@ -1238,7 +1332,7 @@ class CodeBlock():
         return res
 
 
-    def plot(loaded_dataset, intermediate_df, description, method):
+    def plot(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         image_list = []
 
@@ -1291,7 +1385,7 @@ class CodeBlock():
         intermediate_df.append(df.head(10))
         return res
 
-    def predict_test(loaded_dataset, intermediate_df, description, method):
+    def predict_test(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
 
@@ -1321,7 +1415,7 @@ class CodeBlock():
         intermediate_df.append(new_df.head(10).round(3))
         return res
 
-    def probability_density_plot(loaded_dataset, intermediate_df, description, method):
+    def probability_density_plot(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         image_list = []
 
@@ -1371,12 +1465,11 @@ class CodeBlock():
         return res
 
 
-    def quantitative_bar_plot(loaded_dataset, intermediate_df, description, method):
+    def quantitative_bar_plot(self, loaded_dataset, intermediate_df, description, method):
         from pandas.api.types import is_numeric_dtype
         import matplotlib.pyplot as plt
         import io 
         import base64
-        
 
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
@@ -1414,7 +1507,7 @@ class CodeBlock():
         intermediate_df.append(df.head(10))
         return res
 
-    def random_forest_classifier(loaded_dataset, intermediate_df, description, method):
+    def random_forest_classifier(self, loaded_dataset, intermediate_df, description, method):
         from sklearn.ensemble import RandomForestClassifier
         from sklearn.model_selection import cross_val_score
         from pandas.api.types import is_numeric_dtype
@@ -1445,7 +1538,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(cross_val_score(forest,X_train,y_train,cv=5)))
         return res
 
-    def rank_sum(loaded_dataset, intermediate_df, description, method):
+    def rank_sum(self, loaded_dataset, intermediate_df, description, method):
         import itertools
         from scipy import stats
         import pandas as pd
@@ -1479,7 +1572,7 @@ class CodeBlock():
         intermediate_df.append(res_df.round(3))
         return res
 
-    def scatterplot_regression(loaded_dataset, intermediate_df, description, method):
+    def scatterplot_regression(self, loaded_dataset, intermediate_df, description, method):
         import matplotlib.pyplot as plt
         import seaborn
         import itertools
@@ -1523,7 +1616,7 @@ class CodeBlock():
         intermediate_df.append(numerical_df.head(10).round(3))
         return res
 
-    def shuffle_split(loaded_dataset, intermediate_df, description, method):
+    def shuffle_split(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         numerical_df = df.select_dtypes(include='number')
 
@@ -1552,7 +1645,7 @@ class CodeBlock():
         intermediate_df.append(X_train.head(10).round(3))
         return res
 
-    def stack_ftgrid(loaded_dataset, intermediate_df, description, method):
+    def stack_ftgrid(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         import matplotlib.pyplot as plt
@@ -1570,7 +1663,7 @@ class CodeBlock():
         numerical_cols = df.select_dtypes(include='number').columns
         category_cols = df.select_dtypes(include='object').columns
 
-        if (len(numerical_cols) == 0 OR len(category_cols) == 0):
+        if (len(numerical_cols) == 0 or len(category_cols) == 0):
             res = {
                 'output': "Dataframe has no numeric or cateogry values", 
                 'result': "Dataframe has no numeric or category values", 
@@ -1602,7 +1695,7 @@ class CodeBlock():
         return res
 
     
-    def test_linear_regression(loaded_dataset, intermediate_df, description, method):
+    def test_linear_regression(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         from sklearn.linear_model import LinearRegression
         from sklearn.model_selection import cross_val_score
@@ -1635,7 +1728,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(cross_val_score(linear_regression, data, target, cv=10)))
         return res
 
-    def top5cat(loaded_dataset, intermediate_df, description, method):
+    def top5cat(self, loaded_dataset, intermediate_df, description, method):
         category_df = loaded_dataset.select_dtypes(include='object')
 
         if (category_df.empty == True):
@@ -1659,7 +1752,7 @@ class CodeBlock():
 
         return res
 
-    def unique_column_values(loaded_dataset, intermediate_df, description, method):
+    def unique_column_values(self, loaded_dataset, intermediate_df, description, method):
         test = {}
 
         import pandas as pd
@@ -1687,7 +1780,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(dict([ (k,pd.Series(test[k])) for k in test.keys() ])).head(10))
         return res
 
-    def variance(loaded_dataset, intermediate_df, description, method):
+    def variance(self, loaded_dataset, intermediate_df, description, method):
         try:
             new_df = loaded_dataset.var()
         except Exception as e:
@@ -1708,7 +1801,7 @@ class CodeBlock():
         intermediate_df.append(new_df.round(3))
         return res
 
-    def word_to_vec(loaded_dataset, intermediate_df, description, method):
+    def word_to_vec(self, loaded_dataset, intermediate_df, description, method):
         df= loaded_dataset
         
         #this function might be throwing errors - still needs to be looked at
@@ -1754,72 +1847,8 @@ class CodeBlock():
         intermediate_df.append(res_df.head(10))
         return res
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# import pandas as pd
+# import numpy as np
+# c = CodeBlock()
+# loaded_ds = pd.DataFrame(np.random.uniform(low=1, high=10, size=(10,3)), columns=['a', 'b', 'c'])
+# c.anova_variance(loaded_ds, [], '', 'method')
