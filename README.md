@@ -7,7 +7,7 @@ Clone the repo:
 
 `git clone https://gitlab.cs.umd.edu/leibatt/lodestar.git`
 
-Before continuing, we must have to download Node & npm: 
+Before continuing, we have to download Node & npm: 
 
 [For Windows](https://www.guru99.com/download-install-node-js.html)
 
