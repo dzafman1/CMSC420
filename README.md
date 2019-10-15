@@ -1,19 +1,62 @@
-# Lodestar
+# Lodestar Setup Instructions
 
-## Setup Directions
-### To set up Lodestar: 
-1. Download Lodestar from https://github.com/zhecui/incrementalAnalysis
-2. Cd into incrementalAnalysis and make sure you have NPM installed as well as Python
-* NPM version should be 10 
-* Python version can be 2 or 3
-3. Run > NPM install -g polymer-cli 
-* This globally installs Polymer CLI on the machine
-* If Python 3 is install, Polymer won't work correctly so you'll need to install bower 
-* Npm install -g bower pretty much worked
-4. Cd to server/src and Run > Python Run.py
-* This will give you a list of dependencies for the run.py file. Once you install all of these dependencies… you should be good to go! 
-5. To run the server, 'python run.py' in server/src
-6. To run the front end, 'polymer serve' in root 
+Clone the repo 
+
+## **Step 1**
+
+`git clone https://gitlab.cs.umd.edu/leibatt/lodestar.git`
+
+Before continuing, we must have to download Node & npm: 
+
+[For Windows](https://www.guru99.com/download-install-node-js.html)
+
+[For Mac OS](https://treehouse.github.io/installation-guides/mac/node-mac.html)
+
+[See here for more information on NPM](https://www.npmjs.com/get-npm)
+
+**Note**: NPM version should be 10 
+
+**Note**: In the future, we will want to use a Node Version Manager (also in link above)
+
+We also want to install **Python 2.7**
+
+**Mac OS**: Python 2.7 comes preinstalled and is the default version for Mac OS (if you have an older Mac machine you may want to check to see you have this installed)
+
+**Windows**: [Python Download - choose 2.7 release!](https://www.python.org/downloads/)
+
+
+## **Step 2**
+
+Lodestar uses [PolymerJS](https://www.polymer-project.org/) for the client side. We can install Polymer-CLI by running the following command in the root directory of the repo: 
+`npm install -g polymer-cli`
+
+**Note**: 
+The **g** in `npm install -g` is a flag signifying that you want to install that particular npm module system wide (globally). Without the g option, the module would be installed locally inside the current directory called `node_modules`
+
+Lodestar uses many different packages for all of its client side components. To manage these, we use **Bower**, a ***package manager***
+
+To install Bower: `npm install -g bower`
+
+After installing Bower, run `bower install` in the ***root directory*** of the project and follow prompts that appear. 
+
+## **Step 3**
+
+Finally, we need to install all the ***backend dependencies*** that Lodestar needs in order to work. Projects like Lodestar can sometimes have MANY dependencies, so in order to make our job easier, we have all the dependencies in a list called `requirements.txt` located in the `/server` directory of the project. 
+
+Navigate to `/server` and run `pip install -r requirements.txt` 
+
+**Note**: If you are working on a Windows machine, you may need to install pip separately. To do so, visit [here](https://www.liquidweb.com/kb/install-pip-windows/) 
+
+Now you are ready to run Lodestar on your machine!
+
+To get it started do the following: 
+1. From root directory, navigate to `server/src` and run `python run.py`
+    * This starts the Flask server. This ***must*** be started *before* client side is run!
+
+2.Navigate to root directory and run `polymer serve`
+
+##### Lodestar should now be running on localhost!
+
 
 To set up the Docker VM: 
 - You need to set the IP address of the backend to 0.0.0.0:5000 
