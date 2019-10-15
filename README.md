@@ -1,8 +1,9 @@
 # Lodestar Setup Instructions
 
-Clone the repo 
 
 ## **Step 1**
+
+Clone the repo:
 
 `git clone https://gitlab.cs.umd.edu/leibatt/lodestar.git`
 
