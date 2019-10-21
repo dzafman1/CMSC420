@@ -5,7 +5,7 @@ import seaborn as sns
 import json
 import re
 import ast
-# import codeblock_class (when we have it)
+from codeblock_class import CodeBlock
 
 class TestCrowdBlocks(unittest.TestCase):
     df1 = pd.DataFrame(np.random.uniform(low=1, high=10, size=(10,3)), columns=['a', 'b', 'c'])
