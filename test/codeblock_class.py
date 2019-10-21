@@ -1,5 +1,108 @@
-class CodeBlock(): 
-    def anova_variance(loaded_dataset, intermediate_df, description, method):
+from sklearn.metrics import r2_score
+
+class CodeBlock:
+    def save_bytes_image(self, image_list):
+        import io
+        from matplotlib import plot as plt
+        import base64
+
+        bytes_image = io.BytesIO()
+        plt.savefig(bytes_image, format='png')
+        image_list.append(base64.b64encode(bytes_image.getvalue()))
+        bytes_image.seek(0)
+
+    def performance_metric(self, y_true, y_predict):
+        """ Calculates and returns the performance score between
+            true and predicted values based on the metric chosen. """
+        # TODO: Calculate the performance score between 'y_true' and 'y_predict'
+        score = r2_score(y_true,y_predict)
+
+        # Return the score
+        return score
+
+    # cluster id 162
+
+    def initializeClustersForKmeans(self, df):
+        '''Use k-means++ to initialize a good set of centroids'''
+        from pandas.api.types import is_numeric_dtype
+        from sklearn.metrics import pairwise_distances
+        import numpy as np
+        import pandas as pd
+
+        k = 50
+        quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
+        centroids = np.zeros((k, len(quantitativeColumns)))
+        data = df[quantitativeColumns].values
+
+        # Randomly choose the first centroid.
+        # Since we have no prior knowledge, choose uniformly at random
+        idx = np.random.randint(data.shape[0])
+        centroids[0] = data[idx,:]
+        # Compute distances from the first centroid chosen to all the other data points
+        squared_distances = pairwise_distances(data, centroids[0:1], metric='euclidean').flatten()**2
+
+        for i in xrange(1, k):
+            # Choose the next centroid randomly, so that the probability for each data point to be chosen
+            # is directly proportional to its squared distance from the nearest centroid.
+            # Roughtly speaking, a new centroid should be as far as from ohter centroids as possible.
+            idx = np.random.choice(data.shape[0], 1, p=squared_distances/sum(squared_distances))
+            centroids[i] = data[idx,:]
+            # Now compute distances from the centroids to all data points
+            squared_distances = np.min(pairwise_distances(data, centroids[0:i+1], metric='euclidean')**2,axis=1)
+
+        final = {}
+        for i,c in enumerate(quantitativeColumns):
+            final[c] = centroids[:,i]
+        return pd.DataFrame(final)
+
+    def calcConditionalFreqDist(self, df):
+        import nltk
+        import pandas as pd
+
+        # words = ['can', 'could', 'may', 'might', 'must', 'will']
+        words = (df.select_dtypes(include='object').values).ravel()
+        genres = ['adventure', 'romance', 'science_fiction']
+
+        cfdist = nltk.ConditionalFreqDist(
+                    (genre, word)
+                    for genre in genres
+                    for word in nltk.corpus.brown.words(categories=genre)
+                    if word in words)
+
+        data = {'conditionalDist': cfdist}
+        return pd.DataFrame(data)
+
+    # from keras.preprocessing.text import Tokenizer
+    # from gensim.models import word2vec
+
+    def calcWordVec(self, df):
+        import numpy as np
+        import Tokenizer
+        import pandas as pd
+        import word2vec
+
+        texts = df.select_dtypes(include='object')
+
+        MAX_NB_WORDS = 5000
+        EMBEDDING_DIM = 100
+
+        tokenizer = Tokenizer(nb_words=MAX_NB_WORDS)
+        sequences = tokenizer.texts_to_sequences(texts)
+        word_index = tokenizer.word_index
+
+        nb_words = min(MAX_NB_WORDS, len(word_index))+1
+
+        embedding_matrix = np.zeros((nb_words, EMBEDDING_DIM))
+        for word, i in word_index.items():
+                if word in word2vec.vocab:
+                    embedding_matrix[i] = word2vec.word_vec(word)
+        print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
+
+        data = {"wordvec":[]}
+        data['wordvec'].append(np.sum(np.sum(embedding_matrix, axis=1) == 0))
+        return pd.DataFrame(data)
+
+    def anova_variance(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         from pandas.api.types import is_string_dtype
@@ -70,8 +173,8 @@ class CodeBlock():
         intermediate_df.append(res_df.round(3))
 
         return res
-    
-    def bootstrap(loaded_dataset, intermediate_df, description, method):
+
+    def bootstrap(self, loaded_dataset, intermediate_df, description, method):
         #get columns that have numerical values
 
         #check dtype of all values in dataframe
@@ -83,7 +186,7 @@ class CodeBlock():
 
         if current_df.empty == True:
             res = {
-                'output': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
                 'result' : "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : 'error'
@@ -113,8 +216,8 @@ class CodeBlock():
         }
         intermediate_df.append(current_df.head(10).round(3))
         return res
-    
-    def cat_boxplot(loaded_dataset, intermediate_df, description, method):
+
+    def cat_boxplot(self, loaded_dataset, intermediate_df, description, method):
 
         import pandas as pd
         import numpy as np
@@ -167,7 +270,7 @@ class CodeBlock():
         }
         intermediate_df.append(df.head(10).round(3))
         return res
-    
+
 
     def cat_count(loaded_dataset, intermediate_df, description, method):
 
@@ -230,11 +333,11 @@ class CodeBlock():
 
         import pandas as pd
         import numpy as np
-        import sys	
+        import sys
 
-        df_initial = loaded_dataset 
+        df_initial = loaded_dataset
 
-        if df_initial is None: 
+        if df_initial is None:
             res = {
                 'result': "Null dataframe needs numeric values",
                 'output': "Null dataframe needs numeric values",
@@ -245,11 +348,10 @@ class CodeBlock():
 
         df = loaded_dataset.select_dtypes(include='number')
 
-
-        if df.empty == True or df.isnull().values.all() == True: 
+        if df.empty == True or df.isnull().values.all() == True:
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : 'error'
             }
@@ -258,9 +360,9 @@ class CodeBlock():
 
 
         # convert numerical columns in df to matrix representation
-        
+
         df_matrix = df.as_matrix() # This usage is set to be deprecated soon
-            
+
         data = {"CovMeanDot":[]}
         covariance = np.cov(df_matrix)
         mean = np.mean(df_matrix, axis=0)
@@ -270,14 +372,14 @@ class CodeBlock():
         # if not (np.linalg.cond(covariance) < 1/sys.float_info.epsilon):
         # 	#handle it
         # 	res = {
-        # 		'output': "Matrix is singular", 
-        # 		'result': "Matrix is singular", 
+        # 		'output': "Matrix is singular",
+        # 		'result': "Matrix is singular",
         # 		'description' : "Matrix is singular",
         # 		'type' : 'error'
         # 	}
 
         # 	return res
-        # else: 
+        # else:
         inv = np.linalg.inv(covariance)
 
         dot = np.dot(np.dot(mean, inv), mean)
@@ -292,12 +394,11 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(data))
         return res
 
-    
-    def compute_percentiles_range(loaded_dataset, intermediate_df, description, method):
+    def compute_percentiles_range(self, loaded_dataset, intermediate_df, description, method):
         from pandas.api.types import is_numeric_dtype
         import pandas as pd
         import numpy as np
-        
+
         lowerPercentile = 5
         upperPercentile = 95
         df = loaded_dataset
@@ -306,7 +407,7 @@ class CodeBlock():
         if len(quantitativeColumns) == 0:
             res = {
                 'output': "Dataframe needs numeric values",
-                'result': "Dataframe needs numeric vavlues",
+                'result': "Dataframe needs numeric values",
                 'description': "Dataframe needs numeric values",
                 'type' : 'error'
             }
@@ -325,8 +426,8 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(data))
         return res
 
-    
-    def conditional_frequence_distribution(loaded_dataset, intermediate_df, description, method):
+
+    def conditional_frequence_distribution(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         import nltk
@@ -337,7 +438,7 @@ class CodeBlock():
             # words = ['can', 'could', 'may', 'might', 'must', 'will']
             words = (df.select_dtypes(include='object').values).ravel()
             genres = ['adventure', 'romance', 'science_fiction']
-            
+
             cfdist = nltk.ConditionalFreqDist(
                         (genre, word)
                         for genre in genres
@@ -346,13 +447,13 @@ class CodeBlock():
 
             data = {'conditionalDist': cfdist}
             return pd.DataFrame(data)
-        
+
 
         df = loaded_dataset.select_dtypes(include='object')
-        
-        if df.empty == True: 
+
+        if df.empty == True:
             res = {
-                'output': "Dataframe has no object values", 
+                'output': "Dataframe has no object values",
                 'result' : "Dataframe has no object values",
                 'description' : "Dataframe has no object values",
                 'type' : "error"
@@ -370,8 +471,8 @@ class CodeBlock():
         intermediate_df.append(df.head(10))
         return res
 
-    
-    def corr_heatmap(loaded_dataset, intermediate_df, description, method):
+
+    def corr_heatmap(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
         import matplotlib.pyplot as plt
         import seaborn
@@ -387,7 +488,7 @@ class CodeBlock():
         corr = df.select_dtypes(include='number').corr()
         image_list = []
         plt.clf()
-        
+
         seaborn.heatmap(corr, cmap='viridis', vmax=1.0, vmin=-1.0, linewidths=0.1,annot=True, annot_kws={"size": 8}, square=True)
         save_bytes_image(image_list)
         res = {
@@ -399,14 +500,13 @@ class CodeBlock():
         intermediate_df.append(corr.round(3))
         return res
 
-    
 
-    def corr(loaded_dataset, intermediate_df, description, method):
+    def corr(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         #Do we need this check ?
-        
-        if df is None: 
+
+        if df is None:
             res = {
                 'result': "Null dataframe needs numeric values",
                 'output': "Null dataframe needs numeric values",
@@ -417,7 +517,7 @@ class CodeBlock():
 
         try:
             numerical_df = df.select_dtypes(include='number')
-        except ValueError: 
+        except ValueError:
             res = {
                 'result': "Dataframe needs numeric values",
                 'output': "Dataframe needs numeric values",
@@ -425,7 +525,7 @@ class CodeBlock():
                 'type' : 'error'
             }
             return res
-        
+
         if (numerical_df.empty == True or df.isnull().values.all() == True):
             res = {
                 'result': "Dataframe needs numeric values",
@@ -435,7 +535,7 @@ class CodeBlock():
             }
 
             return res
-        
+
         correlations = numerical_df.corr()
         res = {
             'result' : correlations.round(3).to_json(orient='table'),
@@ -443,20 +543,20 @@ class CodeBlock():
             'description' : description,
             'type' : method
         }
-        
+
         intermediate_df.append(correlations.round(3))
         return res
 
     def decision_tree_classifier(loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
-        
+
         from sklearn.tree import DecisionTreeClassifier
         from sklearn.model_selection import train_test_split
         from pandas.api.types import is_numeric_dtype
         from sklearn.metrics import accuracy_score
         import pandas as pd
 
-        if df is None: 
+        if df is None:
             res = {
                 'output': "Null Dataframe needs numeric values",
                 'result' : "Null Dataframe needs numeric values",
@@ -491,7 +591,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(data).head(10))
         return res
 
-    
+
 
 
     def decision_tree_regressor(loaded_dataset, intermediate_df, description, method):
@@ -512,7 +612,6 @@ class CodeBlock():
                 'type' : 'error'
             }
             return res
-
         if len(quantitativeColumns) == 0:
             res = {
                 'output': "Dataframe needs numeric values",
@@ -538,14 +637,14 @@ class CodeBlock():
         intermediate_df.append(out_df.head(10))
         return res
 
-    
-    def demo_hstack(loaded_dataset, intermediate_df, description, method):
+
+    def demo_hstack(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         from pandas.api.types import is_numeric_dtype
         import numpy as np
         import pandas as pd
-        
+
         quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
 
         if len(quantitativeColumns) == 0:
@@ -572,9 +671,9 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame([u, v]).head(10))
         return res
 
-    def demo_log_space(loaded_dataset, intermediate_df, description, method):
-        df = loaded_dataset	
-        
+    def demo_log_space(self, loaded_dataset, intermediate_df, description, method):
+        df = loaded_dataset
+
         from pandas.api.types import is_numeric_dtype
         from sklearn.model_selection import train_test_split
         import numpy as np
@@ -612,7 +711,15 @@ class CodeBlock():
         from sklearn.metrics import confusion_matrix
         import pandas as pd
         import numpy as np
+        import io
+        import base64
         import matplotlib.pyplot as plt
+
+        def save_bytes_image(image_list):
+            bytes_image = io.BytesIO()
+            plt.savefig(bytes_image, format='png')
+            image_list.append(base64.b64encode(bytes_image.getvalue()))
+            bytes_image.seek(0)
 
         data = {'confusion': []}
         quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
@@ -625,7 +732,7 @@ class CodeBlock():
                 'type' : 'error'
             }
             return res
-        
+
         yy_test = df[quantitativeColumns[0]].values.ravel()
         yy_pred = df[quantitativeColumns[1]].values.ravel()
         confusion = confusion_matrix(yy_test, yy_pred)
@@ -649,7 +756,7 @@ class CodeBlock():
         plt.show()
 
         save_bytes_image(image_list)
-        
+
         res = {
             'output': image_list,
             'result': pd.DataFrame(data).head(10).to_json(orient='table'),
@@ -659,9 +766,9 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(data).head(10))
         return res
 
-    
-    def dist_quant_category(loaded_dataset, intermediate_df, description, method):
-        import pandas as pd 
+
+    def dist_quant_category(self, loaded_dataset, intermediate_df, description, method):
+        import pandas as pd
         import seaborn
         import matplotlib.pyplot as plt
 
@@ -670,13 +777,13 @@ class CodeBlock():
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         image_list = []
         clean_dataset = pd.DataFrame()
         df = loaded_dataset
 
-        
-        
+
+
         for col in loaded_dataset.columns:
             if df[col].dtype == 'object' or df[col].value_counts().count() <= 20:
                 clean_dataset[col] = df[col].astype('category')
@@ -685,7 +792,7 @@ class CodeBlock():
 
         numerical_cols = clean_dataset.select_dtypes(include='number').columns
         category_cols = clean_dataset.select_dtypes(include='category').columns
-        
+
         if (len(numerical_cols) == 0 or len(category_cols) == 0):
             res = {
                 'output': "Dataframe needs numeric AND category values",
@@ -712,8 +819,8 @@ class CodeBlock():
         intermediate_df.append(clean_dataset.head(10).round(3))
         return res
 
-    
-    def dist_two_categories(loaded_dataset, intermediate_df, description, method):
+
+    def dist_two_categories(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
         import itertools
@@ -721,26 +828,26 @@ class CodeBlock():
         import base64
         import matplotlib.pyplot as plt
         import seaborn as seaborn
-        
+
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         image_list = []
         clean_dataset = pd.DataFrame()
         df = loaded_dataset
-        
+
         for col in df.columns:
             if df[col].dtype == 'object' or df[col].value_counts().count() <= 20:
                 clean_dataset[col] = df[col].astype('category')
-        
+
         category_df = clean_dataset.select_dtypes(include='category')
 
-        if category_df.empty == True: 
+        if category_df.empty == True:
             res = {
-                'output': "Dataframe has no categorical values", 
+                'output': "Dataframe has no categorical values",
                 'result' : "Dataframe has no categorical values",
                 'description' : "Dataframe has no categorical values",
                 'type' : "error"
@@ -763,13 +870,13 @@ class CodeBlock():
         }
         intermediate_df.append(category_df.head(10).round(3))
         return res
-    
+
 
 
     def dist_num(loaded_dataset, intermediate_df, description, method):
         image_list = []
         df = loaded_dataset
-        
+
         import pandas as pd
         import numpy as np
         import matplotlib.pyplot as plt
@@ -781,14 +888,14 @@ class CodeBlock():
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         #cols that have numerical values
         numerical_df = df.select_dtypes(include='number')
 
         #checks to see if input df has any numerical values
-        if numerical_df.empty == True: 
+        if numerical_df.empty == True:
             res = {
-                'output': "Dataframe has no numerical values", 
+                'output': "Dataframe has no numerical values",
                 'result' : "Dataframe has no numerical values",
                 'description' : "Dataframe has no numerical values",
                 'type' : "error"
@@ -815,7 +922,7 @@ class CodeBlock():
         intermediate_df.append(numerical_df.head(10).round(3))
         return res
 
-    
+
 
     def drop_cols(loaded_dataset, intermediate_df, description, method):
         import pandas as pd
@@ -830,9 +937,9 @@ class CodeBlock():
             if c not in df2.columns:
                 dropped_columns.append(c)
 
-        if len(dropped_columns) == 0: 
+        if len(dropped_columns) == 0:
             res = {
-                'output': df.describe().round(3).to_json(orient='table'), 
+                'output': df.describe().round(3).to_json(orient='table'),
                 'result' : df.describe().round(3).to_json(orient='table'),
                 'description' : "Dataframe has less than 30% NaN entries",
                 'type' : "error"
@@ -851,11 +958,11 @@ class CodeBlock():
     def drop_rows(loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         import numpy as np
-        
+
         df = loaded_dataset
-        if df.isnull().values.any() == False: 
+        if df.isnull().values.any() == False:
             res = {
-                'output': df.head(10).to_json(orient='table'), 
+                'output': df.head(10).to_json(orient='table'),
                 'result' : df.head(10).to_json(orient='table'),
                 'description' : "Dataframe has no rows with NaN entries",
                 'type' : "error"
@@ -878,10 +985,10 @@ class CodeBlock():
         import numpy as np
 
         df = loaded_dataset.select_dtypes(include='number')
-        if df.empty == True: 
+        if df.empty == True:
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -900,7 +1007,7 @@ class CodeBlock():
 
     def extra_trees_classifier(loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
-        
+
         from sklearn.ensemble import ExtraTreesClassifier
         from sklearn.model_selection import cross_val_score
         from sklearn.model_selection import train_test_split
@@ -937,7 +1044,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(scores))
         return res
 
-    def firstTen(loaded_dataset, intermediate_df, description, method): 
+    def firstTen(self, loaded_dataset, intermediate_df, description, method):
         df = loaded_dataset
 
         samples = df.head(10)
@@ -960,19 +1067,19 @@ class CodeBlock():
         from sklearn.metrics import r2_score
 
         def performance_metric(y_true, y_predict):
-            """ Calculates and returns the performance score between 
+            """ Calculates and returns the performance score between
                 true and predicted values based on the metric chosen. """
-            
+
             # TODO: Calculate the performance score between 'y_true' and 'y_predict'
             score = r2_score(y_true,y_predict)
-            
+
             # Return the score
             return score
-            
+
         def fit_model(X, y):
-            """ Performs grid search over the 'max_depth' parameter for a 
+            """ Performs grid search over the 'max_depth' parameter for a
                 decision tree regressor trained on the input data [X, y]. """
-            
+
             # Create cross-validation sets from the training data
             cv_sets = ShuffleSplit(n_splits = 10, test_size = 0.20, random_state = 0)
 
@@ -982,7 +1089,7 @@ class CodeBlock():
             # TODO: Create a dictionary for the parameter 'max_depth' with a range from 1 to 10
             params = {'max_depth': range(1,11)}
 
-            # TODO: Transform 'performance_metric' into a scoring function using 'make_scorer' 
+            # TODO: Transform 'performance_metric' into a scoring function using 'make_scorer'
             scoring_fnc = make_scorer(performance_metric)
 
             # TODO: Create the grid search object
@@ -993,7 +1100,7 @@ class CodeBlock():
 
             # Return the optimal model after fitting the data
             return grid.best_estimator_
-            
+
         X_train, X_test, y_train, y_test = df
 
 
@@ -1007,7 +1114,7 @@ class CodeBlock():
                 'type': 'error'
             }
             return res
-        
+
         res = {
             'output' : y_train.head(10).round(3).to_json(orient='table'),
             'result' : "Parameter 'max_depth' is {} for the optimal model.".format(reg.get_params()['max_depth']),
@@ -1017,7 +1124,7 @@ class CodeBlock():
         intermediate_df.append(y_train.head(10).round(3))
         return res
 
-    def des(loaded_dataset, intermediate_df, description, method): 
+    def des(self, loaded_dataset, intermediate_df, description, method):
         descriptive_statistics = loaded_dataset.describe(include='all')
         res = {
             'result' : descriptive_statistics.round(3).to_json(orient='table'),
@@ -1027,8 +1134,8 @@ class CodeBlock():
         }
         intermediate_df.append(descriptive_statistics.round(3))
         return res
-    
-    def initialize_kmeans_cluster(loaded_dataset, intermediate_df, description, method):
+
+    def initialize_kmeans_cluster(self, loaded_dataset, intermediate_df, description, method):
         df= loaded_dataset
         try:
             res_df = initializeClustersForKmeans(df)
@@ -1063,10 +1170,10 @@ class CodeBlock():
         nCols = [c for c in list(df) if is_numeric_dtype(df[c])]
 
         #if length is 0 that means no columns contained any numerical data
-        if len(nCols) == 0: 
+        if len(nCols) == 0:
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1086,7 +1193,7 @@ class CodeBlock():
         intermediate_df.append(pd.DataFrame(data))
         return res
 
-    
+
 
     #test this with non umeric values - then check if needed
     def mean(loaded_dataset, intermediate_df, description, method):
@@ -1096,10 +1203,10 @@ class CodeBlock():
         import pandas as pd
         import numpy as np
 
-        if df.empty == True: 
+        if df.empty == True:
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1130,13 +1237,13 @@ class CodeBlock():
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         numerical_cols = df.select_dtypes(include='number').columns
 
-        if len(numerical_cols) == 0: 
+        if len(numerical_cols) == 0:
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1164,7 +1271,7 @@ class CodeBlock():
     def outer_join(loaded_dataset, intermediate_df, description, method):
         df1 = loaded_dataset
 
-        import panas as pd
+        import pandas as pd
         import numpy as np
 
         res = {
@@ -1186,18 +1293,18 @@ class CodeBlock():
         import io
         import base64
         import matplotlib.pyplot as plt
-        
+
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
 
-        if df.empty == True or len(df.columns) < 2: 
+
+        if df.empty == True or len(df.columns) < 2:
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1214,7 +1321,7 @@ class CodeBlock():
         for p, v in zip(P, V):
             i = int((p+np.pi)/(2*np.pi/p_steps))
             y[i].append(v)
-        
+
         means = [ np.mean(np.array(vs)) for vs in y ]
         stds = [ np.std(np.array(vs)) for vs in y ]
         plt.plot(x, means)
@@ -1233,7 +1340,7 @@ class CodeBlock():
             'description' : description,
             'type': method
         }
-        
+
         intermediate_df.append( df.head(10))
         return res
 
@@ -1253,14 +1360,14 @@ class CodeBlock():
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         samples = dict()
         alt_df = df.select_dtypes(include='number')
 
         if (alt_df.empty == True):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1299,8 +1406,8 @@ class CodeBlock():
         print ("DF ROWS: \n", df.shape[0])
         if (df.shape[0] < 2):
             res = {
-                'output': "Dataframe has less than two rows", 
-                'result': "Dataframe has less than two rows", 
+                'output': "Dataframe has less than two rows",
+                'result': "Dataframe has less than two rows",
                 'description' : "Dataframe has less than two rows",
                 'type' : "error"
             }
@@ -1331,7 +1438,7 @@ class CodeBlock():
         import pandas as pd
         import io
         import base64
-        
+
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
             plt.savefig(bytes_image, format='png')
@@ -1343,8 +1450,8 @@ class CodeBlock():
 
         if (len(quantitativeColumns) == 0):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1374,29 +1481,29 @@ class CodeBlock():
     def quantitative_bar_plot(loaded_dataset, intermediate_df, description, method):
         from pandas.api.types import is_numeric_dtype
         import matplotlib.pyplot as plt
-        import io 
+        import io
         import base64
-        
+
 
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         df = loaded_dataset
         image_list = []
         quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
 
         if (len(quantitativeColumns) == 0):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
             return res
-        
+
         x = df[quantitativeColumns[0]].values.ravel()
         y = df[[quantitativeColumns[1]]].values.ravel()
         plt.figure()
@@ -1419,16 +1526,16 @@ class CodeBlock():
         from sklearn.model_selection import cross_val_score
         from pandas.api.types import is_numeric_dtype
         import pandas as pd
-        
+
         df = loaded_dataset.select_dtypes(include='number')
-        
+
         forest = RandomForestClassifier(n_estimators=100, n_jobs=-1,random_state=17)
         quantitativeColumns = [c for c in list(df) if is_numeric_dtype(df[c])]
 
         if (len(quantitativeColumns) == 0):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1449,17 +1556,17 @@ class CodeBlock():
         import itertools
         from scipy import stats
         import pandas as pd
-        
+
         current_df = loaded_dataset
-        if not isinstance(current_df, pd.DataFrame): 
+        if not isinstance(current_df, pd.DataFrame):
             current_df = current_df.to_frame()
-        
+
         numerical_df = current_df.select_dtypes(include='number')
 
         if (numerical_df.empty == True):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
@@ -1485,25 +1592,25 @@ class CodeBlock():
         import itertools
         import io
         import base64
-        
+
         def save_bytes_image(image_list):
             bytes_image = io.BytesIO()
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
         df = loaded_dataset
         numerical_df = df.select_dtypes(include='number')
 
         if (numerical_df.empty == True):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
             return res
-        
+
         image_list = []
         count = 0
         for col1, col2 in itertools.combinations(numerical_df, 2):
@@ -1529,16 +1636,16 @@ class CodeBlock():
 
         if (numerical_df.empty == True):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
             return res
-        
+
         features = numerical_df[numerical_df.columns[0:3]]
         predicted_variables = numerical_df[numerical_df.columns[-1]]
-        
+
         from sklearn.model_selection import train_test_split
 
         X_train, X_test, y_train, y_test = train_test_split(features, predicted_variables, test_size=0.2,random_state=100)
@@ -1565,20 +1672,20 @@ class CodeBlock():
             plt.savefig(bytes_image, format='png')
             image_list.append(base64.b64encode(bytes_image.getvalue()))
             bytes_image.seek(0)
-        
+
 
         numerical_cols = df.select_dtypes(include='number').columns
         category_cols = df.select_dtypes(include='object').columns
 
         if (len(numerical_cols) == 0 OR len(category_cols) == 0):
             res = {
-                'output': "Dataframe has no numeric or cateogry values", 
-                'result': "Dataframe has no numeric or category values", 
+                'output': "Dataframe has no numeric or category values",
+                'result': "Dataframe has no numeric or category values",
                 'description' : "Dataframe has no numeric or category values",
                 'type' : "error"
             }
             return res
-        
+
         image_list = []
         for cat_var in category_cols:
             if df[cat_var].value_counts().count() <= 5:
@@ -1601,8 +1708,8 @@ class CodeBlock():
         intermediate_df.append(df.head(10).round(3))
         return res
 
-    
-    def test_linear_regression(loaded_dataset, intermediate_df, description, method):
+
+    def test_linear_regression(self, loaded_dataset, intermediate_df, description, method):
         import pandas as pd
         from sklearn.linear_model import LinearRegression
         from sklearn.model_selection import cross_val_score
@@ -1640,8 +1747,8 @@ class CodeBlock():
 
         if (category_df.empty == True):
             res = {
-                'output': "Dataframe has no category values", 
-                'result': "Dataframe has no category values", 
+                'output': "Dataframe has no category values",
+                'result': "Dataframe has no category values",
                 'description' : "Dataframe has no category values",
                 'type' : "error"
             }
@@ -1669,13 +1776,13 @@ class CodeBlock():
 
         if (alt_df.empty == True):
             res = {
-                'output': "Dataframe has no numeric values", 
-                'result': "Dataframe has no numeric values", 
+                'output': "Dataframe has no numeric values",
+                'result': "Dataframe has no numeric values",
                 'description' : "Dataframe has no numeric values",
                 'type' : "error"
             }
             return res
-        
+
         for column in alt_df:
             test[column] = alt_df[column].dropna().unique()
         res = {
@@ -1710,14 +1817,14 @@ class CodeBlock():
 
     def word_to_vec(loaded_dataset, intermediate_df, description, method):
         df= loaded_dataset
-        
+
         #this function might be throwing errors - still needs to be looked at
         def calcWordVec(df):
             texts = df.select_dtypes(include='object')
 
             MAX_NB_WORDS = 5000
             EMBEDDING_DIM = 100
-            
+
             tokenizer = Tokenizer(nb_words=MAX_NB_WORDS)
             sequences = tokenizer.texts_to_sequences(texts)
             word_index = tokenizer.word_index
@@ -1736,15 +1843,15 @@ class CodeBlock():
 
         try:
             res_df = calcWordVec(df)
-        except Exception as e: 
+        except Exception as e:
             res = {
-                'output': str(e), 
-                'result': str(e), 
+                'output': str(e),
+                'result': str(e),
                 'description' : str(e),
                 'type' : "error"
             }
             return res
-        
+
             res = {
             'output': res_df.head(10).to_json(orient='table'),
             'result': res_df.head(10).to_json(orient='table'),
@@ -1754,72 +1861,8 @@ class CodeBlock():
         intermediate_df.append(res_df.head(10))
         return res
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# import pandas as pd
+# import numpy as np
+# c = CodeBlock()
+# loaded_ds = pd.DataFrame(np.random.uniform(low=1, high=10, size=(10,3)), columns=['a', 'b', 'c'])
+# c.anova_variance(loaded_ds, [], '', 'method')
