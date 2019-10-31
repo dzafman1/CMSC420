@@ -5,10 +5,13 @@ import seaborn as sns
 import json
 import re
 import ast
+from sklearn import datasets
 from codeblock_class import CodeBlock
 
 class TestCrowdBlocks(unittest.TestCase):
+    iris = datasets.load_iris()
     df1 = pd.DataFrame(np.random.uniform(low=1, high=10, size=(10,3)), columns=['a', 'b', 'c'])
+    df_1 = pd.DataFrame(np.random.randint(low=1, high=10, size=(20,3)), columns=['a', 'b', 'c'])
     df2 = pd.DataFrame({'a': [3, 4, 5], 'b': [0, 1, 2], 'c': [6, 'z', 8]})
     df3 = pd.DataFrame({'a': [3, 4, 5], 'b': [0, 1, 2], 'c': [6, np.nan, 8]})
     df4 = pd.read_csv("https://raw.githubusercontent.com/Opensourcefordatascience/Data-sets/master/crop_yield.csv")
@@ -145,7 +148,11 @@ class TestCrowdBlocks(unittest.TestCase):
 
 
     ###################### Compute Covariance Matrix Tests ###########################
-    def test_compute_covariance_matrix(self):
+    # should this really give "matrix is singular" for df7?
+    # res = self.c.compute_covariance_matrix(self.df7, [], "", "")
+    # print(res['result'])
+
+    def test_compute_covariance_matrix_nonnumeric(self):
         res = self.c.compute_covariance_matrix(self.df5, [], "", "")
         df = self.converter(res['result'])
         self.assertTrue(df.empty)
@@ -155,10 +162,6 @@ class TestCrowdBlocks(unittest.TestCase):
         res = self.c.compute_covariance_matrix(self.df1, [], "", "")
         self.assertEqual(res['result'], "Matrix is singular")
 
-
-        # should this really give "matrix is singular" for df7?
-        # res = self.c.compute_covariance_matrix(self.df7, [], "", "")
-        # print(res['result'])
 
     ###################### CORRELATION Tests ###########################
     def test_corr(self):
@@ -251,11 +254,16 @@ class TestCrowdBlocks(unittest.TestCase):
     # NOTE: Modified block to check for <= 1 quantitative columns
     # NOTE: Ran with 1 numeric column - threw shape error
     # NOTE: Ran with 2 numeric column - did not throw error - maybe we need to have atleast two numeric columns
-    def testDTCMixedInvalid(self):
+
+    def test_dtc(self):
+        res = self.c.decision_tree_classifier(self.df_1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
+    def test_dtc_mixed_invalid(self):
         res = self.c.decision_tree_classifier(self.df13, [], "", "")
         self.assertEqual(res['result'], "Dataframe needs numeric values")
 
-    def testDTCMixedValid(self):
+    def test_dtc_mixed_valid(self):
         res = self.c.decision_tree_classifier(self.df14, [], "", "")
         self.assertNotIsInstance(res['result'], Exception)
 
@@ -264,6 +272,10 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertEqual(res['result'], "Null Dataframe needs numeric values")
 
     ################### DECISION TREE REGRESSOR Tests #############################
+    def test_dtr(self):
+        res = self.c.decision_tree_regressor(self.df_1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_dtr_nan(self):
         res = self.c.decision_tree_regressor(self.df3, [], "", "")
         self.assertEqual(res['result'], "Dataframe needs numeric values")
@@ -276,6 +288,21 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertEqual(res['result'], "Dataframe needs numeric values")
 
     ###################### Demo Hstack Tests ##############################
+    def test_demo_hstack_1(self):
+        res = self.c.demo_hstack(self.df1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertNotIsInstance(df, Exception)
+
+    def test_demo_hstack_2(self):
+        res = self.c.demo_hstack(self.df7, [], "", "")
+        df = self.converter(res['result'])
+        self.assertNotIsInstance(df, Exception)
+
+    def test_demo_hstack_mixed(self):
+        res = self.c.demo_hstack(self.df14, [], "", "")
+        df = self.converter(res['result'])
+        self.assertNotIsInstance(df, Exception)
+
     def test_demo_hstack_nonnumeric(self):
         res = self.c.demo_hstack(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -288,6 +315,21 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe needs numeric values")
 
     ###################### Demo Log Space Tests ##############################
+    def test_demo_log_space_1(self):
+        res = self.c.demo_log_space(self.df1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
+    def test_demo_log_space_2(self):
+        res = self.c.demo_log_space(self.df_1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
+    def test_demo_log_space_3(self):
+        res = self.c.demo_log_space(self.df7, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     def test_demo_log_space_nonnumeric(self):
         res = self.c.demo_log_space(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -298,6 +340,16 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe needs numeric values")
 
     ###################### Demo Mat Show Tests ##############################
+    def test_demo_mat_show_1(self):
+        res = self.c.demo_mat_show(self.df7, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
+    def test_demo_mat_show_mixed(self):
+        res = self.c.demo_mat_show(self.df14, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     def test_demo_mat_show_nonnumeric(self):
         res = self.c.demo_mat_show(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -309,6 +361,11 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe needs numeric values")
 
     ################# Distribution Quantitative Category Tests #################
+    # NOTE: What df would work for this? I thought df4 would work but maybe I'm not understanding the analysis correctly
+    def test_dist_quant_category_1(self):
+        res = self.c.dist_quant_category(self.df4, [], "", "")
+        print(res['result'])
+
     def test_dist_quant_category_onlynumeric(self):
         res = self.c.dist_quant_category(self.df1, [], "", "")
         self.assertEqual(res['result'], "Dataframe needs numeric AND category values")
@@ -318,6 +375,14 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertEqual(res['result'], "Dataframe needs numeric AND category values")
 
     ###################### Distribution Quantitative Tests ####################
+    def test_dist_num_1(self):
+        res = self.c.dist_num(self.df1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
+    def test_dist_num_2(self):
+        res = self.c.dist_num(self.df7, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_dist_num_nonnumeric(self):
         res = self.c.dist_num(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -328,18 +393,25 @@ class TestCrowdBlocks(unittest.TestCase):
         res = self.c.dist_num(self.df3, [], "", "")
         self.assertNotEqual(res['result'], "Dataframe has no numerical values")
 
-    ################## Distribution Quantitative Two Categories ################
+    ################## Distribution Quantitative Two Categories ###############
+    def test_dist_two_categories_1(self):
+        res = self.c.dist_two_categories(self.df4, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     # NOTE: This shouldn't fail. Somehow res is not being populated at all
     def test_dist_two_categories_noncategorical(self):
         res = self.c.dist_two_categories(self.df1, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no categorical values")
 
     ###################### Drop NaN Columns Tests ###########################
-    def test_nan_cols(self):
+    def test_nan_cols_1(self):
         res = self.c.drop_cols(self.df3, [], "", "")
         df = self.converter(res['result'])
-        print(df)
         self.assertEqual(df.shape[1], 2)
+
+    def test_nan_cols_2(self):
+        res = self.c.drop_cols(self.df16, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
 
     # returns the original df because no columns were dropped
     # the 'type' of the res is an error, but it returns what we want (the df)
@@ -348,17 +420,21 @@ class TestCrowdBlocks(unittest.TestCase):
         df = self.converter(res['result'])
         self.assertEqual(df.shape[1], 3)
 
-
     ###################### Drop NaN Rows Tests ###########################
-    def test_nan_rows(self):
+    def test_nan_rows_1(self):
         res = self.c.drop_rows(self.df3, [], "", "")
-        self.assertTrue(res['result'])
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
 
     def test_nan_rows_nonnan(self):
         res = self.c.drop_rows(self.df1, [], "", "")
         self.assertEqual(res['description'], "Dataframe has no rows with NaN entries")
 
     ###################### Eval Model Predictions Tests #########################
+    def test_eval_model_1(self):
+        res = self.c.eval_model_predictions(self.df1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_eval_model_nonnumeric(self):
         res = self.c.eval_model_predictions(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -369,6 +445,13 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ###################### Extra Trees Classifier Tests ########################
+    # NOTE: this analysis runs fine, but there is a warning about the minimum number of members
+    # allowed in a class. Do we care about this?
+    def test_extra_trees_1(self):
+        res = self.c.extra_trees_classifier(self.df_1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     def test_extra_trees_nonnumeric(self):
         res = self.c.extra_trees_classifier(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -380,18 +463,23 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertEqual(res['result'], "Dataframe needs numeric values")
 
     ###################### First 10 Tests ###########################
-    def test_first_ten(self):
+    def test_first_ten_1(self):
         res = self.c.firstTen(self.df4, [], "", "")
         df = self.converter(res['result'])
         self.assertEqual(df.shape[0], 10)
 
+    def test_first_ten_2(self):
         res = self.c.firstTen(self.df2, [], "", "")
         df = self.converter(res['result'])
         self.assertEqual(df.size, 9)
 
     ###################### Fit Decision Tree Tests ###########################
     # NOTE: what is the expected input and behavior of this function? FDT doesn't do any input validation
-    # This returns an empty df, but so does a purely numeric df. What is the expected output?
+    def test_fit_decision_tree_1(self):
+        res = self.c.decision_tree_regressor(self.df_1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     def test_fit_decision_tree_nonnumeric(self):
         res = self.c.decision_tree_regressor(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -405,9 +493,14 @@ class TestCrowdBlocks(unittest.TestCase):
 
     def test_des_nan(self):
         res = self.c.des(self.df3, [], "", "")
-        self.assertTrue(res['result'])
+        self.assertNotIsInstance(res['result'], Exception)
 
     ###################### Matrix Norm Tests ###########################
+    def test_matrix_norm_1(self):
+        res = self.c.matrix_norm(self.df_1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     def test_matrix_norm_nonnumeric(self):
         res = self.c.matrix_norm(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -428,6 +521,10 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertTrue(df.empty)
 
     ###################### Numerical Boxplot Tests ###########################
+    def test_num_boxplot_1(self):
+        res = self.c.num_boxplot(self.df_1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_num_boxplot_nonnumeric(self):
         res = self.c.num_boxplot(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -437,6 +534,11 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ###################### Outer Join Tests ###########################
+    def test_outer_join_1(self):
+        res = self.c.outer_join(self.df1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     # TODO: add a null check to outer_join function
     def test_outer_join_null(self):
         res = self.c.outer_join(self.df10, [], "", "")
@@ -484,6 +586,11 @@ class TestCrowdBlocks(unittest.TestCase):
         res = self.c.predict_test(self.df11, [], "", "")
 
     ###################### Probability Density Plot Tests ######################
+    def test_probability_density_plot_1(self):
+        res = self.c.probability_density_plot(self.df_1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
+
     def test_probability_density_plot_nonnumeric(self):
         res = self.c.probability_density_plot(self.df11, [], "", "")
         df = self.converter(res['result'])
@@ -494,6 +601,11 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotIsInstance(res['result'], Exception)
 
     ###################### Quantitative Bar Plot Tests ######################
+    def test_quant_bar_plot_1(self):
+        res = self.c.quantitative_bar_plot(self.df_1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+        self.assertNotEqual(res['result'], "Dataframe has no numeric values")
+
     def test_quant_bar_plot_nonnumeric(self):
         res = self.c.quantitative_bar_plot(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -503,6 +615,12 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ###################### Random Forest Classifier Tests ######################
+    # this analysis runs and produces a df, but we get a split error
+    def test_random_forest_1(self):
+        res = self.c.random_forest_classifier(self.df_1, [], "", "")
+        df = self.converter(res['result'])
+        self.assertFalse(df.empty)
+
     def test_random_forest_nonnumeric(self):
         res = self.c.random_forest_classifier(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -514,6 +632,10 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ######################### Rank Sum Tests ###############################
+    def test_rank_sum_1(self):
+        res = self.c.rank_sum(self.df7, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_rank_sum_nonnumeric(self):
         res = self.c.rank_sum(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -526,6 +648,11 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ###################### Scatterplot Regression Tests #######################
+    # this plot looks nice! good sanity check
+    def test_scatterplot_regression_1(self):
+        res = self.c.scatterplot_regression(self.df_1, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_scatterplot_regression_nonnumeric(self):
         res = self.c.scatterplot_regression(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -535,6 +662,13 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ###################### Shuffle Split Tests #######################
+    # NOTE: shuffle_split stores the resulting dataframe in res['output'], and res['result'] contains
+    # a string. Is this what we want, or should 'result' be the df as well?
+    def test_shuffle_split_1(self):
+        res = self.c.shuffle_split(self.df_1, [], "", "")
+        df = self.converter(res['output'])
+        self.assertFalse(df.empty)
+
     def test_shuffle_split_nonnumeric(self):
         res = self.c.shuffle_split(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
@@ -544,6 +678,11 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertNotEqual(res['result'], "Dataframe has no numeric values")
 
     ###################### Stack FacetGrid Tests #######################
+    # returns an img_lst like we want
+    def test_stack_ftgrid_1(self):
+        res = self.c.stack_ftgrid(self.df4, [], "", "")
+        self.assertNotIsInstance(res['result'], Exception)
+
     def test_stack_ftgrid_onlynumeric(self):
         res = self.c.stack_ftgrid(self.df1, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric or category values")
@@ -553,7 +692,12 @@ class TestCrowdBlocks(unittest.TestCase):
         self.assertEqual(res['result'], "Dataframe has no numeric or category values")
 
     ###################### Linear Regression Tests #######################
-    # what df would work/ is expected behavior? df1 and df7 don't work
+    # what df would work/ is expected behavior? df_1 doesn't work, but iris does
+    # this test will error
+    def test_lin_reg(self):
+        res = self.c.test_linear_regression(self.df_1, [], "", "")
+        df = self.converter(res['result'])
+
     def test_linear_regression_nonnumeric(self):
         res = self.c.test_linear_regression(self.df11, [], "", "")
         self.assertEqual(res['result'], "Dataframe has no numeric values")
