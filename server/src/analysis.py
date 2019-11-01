@@ -65,7 +65,6 @@ class Analysis():
         for i in range(0, len(json_data)):
             if method in json_data[i]["user-data"]["method"]:
                 code_string = ''.join(map(str, json_data[i]['code']))
-        
        
         print ("Current Dataframe: \n")
         print (self.current_df)
