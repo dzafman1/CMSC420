@@ -1,0 +1,101 @@
+insert(GKA): successful {GOROKA, GOROKA, PAPUA NEW GUINEA, (-6.0,145.0)}
+insert(MAG): successful {MADANG, MADANG, PAPUA NEW GUINEA, (-5.0,145.0)}
+insert(HGU): successful {MOUNT HAGEN, MOUNT HAGEN, PAPUA NEW GUINEA, (-5.0,144.0)}
+insert(LAE): successful {NADZAB, NADZAB, PAPUA NEW GUINEA, (-6.0,146.0)}
+insert(POM): successful {PORT MORESBY JACKSONS INTERNATIONAL, PORT MORESBY, PAPUA NEW GUINEA, (-9.0,147.0)}
+insert(WWK): successful {WEWAK INTERNATIONAL, WEWAK, PAPUA NEW GUINEA, (-3.0,143.0)}
+insert(VEY): successful {VESTMANNAEYJAR, VESTMANNAEYJAR, ICELAND, (63.0,-20.0)}
+insert(YAM): successful {SAULT STE MARIE, SAULT SAINTE MARIE, CANADA, (46.0,-84.0)}
+insert(YAV): successful {WINNIPEG ST ANDREWS, WINNIPEG, CANADA, (50.0,-97.0)}
+insert(YAW): successful {SHEARWATER, HALIFAX, CANADA, (44.0,-63.0)}
+insert(YAY): successful {ST ANTHONY, ST. ANTHONY, CANADA, (51.0,-56.0)}
+insert(YAZ): successful {TOFINO, TOFINO, CANADA, (49.0,-125.0)}
+insert(YBB): successful {KUGAARUK, PELLY BAY, CANADA, (68.0,-89.0)}
+insert(YDQ): successful {DAWSON CREEK, DAWSON CREEK, CANADA, (55.0,-120.0)}
+insert(YED): successful {EDMONTON NAMAO, EDMONTON, CANADA, (53.0,-113.0)}
+insert(YEG): successful {EDMONTON INTERNATIONAL, EDMONTON, CANADA, (53.0,-113.0)}
+insert(YEK): successful {ARVIAT, ESKIMO POINT, CANADA, (61.0,-94.0)}
+insert(YEN): successful {ESTEVAN, ESTEVAN, CANADA, (49.0,-102.0)}
+insert(YET): successful {EDSON, EDSON, CANADA, (53.0,-116.0)}
+insert(YEU): successful {EUREKA, EUREKA, CANADA, (79.0,-85.0)}
+Preorder list:
+  (YAV) 4
+  (POM) 3
+  (LAE) 2
+  (HGU) 1
+  [GKA GOROKA]
+  [HGU MOUNT HAGEN]
+  (MAG) 1
+  [LAE NADZAB]
+  [MAG MADANG]
+  (WWK) 2
+  (VEY) 1
+  [POM PORT MORESBY]
+  [VEY VESTMANNAEYJAR]
+  (YAM) 1
+  [WWK WEWAK]
+  [YAM SAULT SAINTE MARIE]
+  (YBB) 3
+  (YAY) 2
+  (YAW) 1
+  [YAV WINNIPEG]
+  [YAW HALIFAX]
+  (YAZ) 1
+  [YAY ST. ANTHONY]
+  [YAZ TOFINO]
+  (YEK) 3
+  (YED) 2
+  (YDQ) 1
+  [YBB PELLY BAY]
+  [YDQ DAWSON CREEK]
+  (YEG) 1
+  [YED EDMONTON]
+  [YEG EDMONTON]
+  (YET) 2
+  (YEN) 1
+  [YEK ESKIMO POINT]
+  [YEN ESTEVAN]
+  (YEU) 1
+  [YET EDSON]
+  [YEU EUREKA]
+Tree structure:
+  | | | | [GKA GOROKA]
+  | | | (HGU) 1
+  | | | | [HGU MOUNT HAGEN]
+  | | (LAE) 2
+  | | | | [LAE NADZAB]
+  | | | (MAG) 1
+  | | | | [MAG MADANG]
+  | (POM) 3
+  | | | | [POM PORT MORESBY]
+  | | | (VEY) 1
+  | | | | [VEY VESTMANNAEYJAR]
+  | | (WWK) 2
+  | | | | [WWK WEWAK]
+  | | | (YAM) 1
+  | | | | [YAM SAULT SAINTE MARIE]
+  (YAV) 4
+  | | | | [YAV WINNIPEG]
+  | | | (YAW) 1
+  | | | | [YAW HALIFAX]
+  | | (YAY) 2
+  | | | | [YAY ST. ANTHONY]
+  | | | (YAZ) 1
+  | | | | [YAZ TOFINO]
+  | (YBB) 3
+  | | | | | [YBB PELLY BAY]
+  | | | | (YDQ) 1
+  | | | | | [YDQ DAWSON CREEK]
+  | | | (YED) 2
+  | | | | | [YED EDMONTON]
+  | | | | (YEG) 1
+  | | | | | [YEG EDMONTON]
+  | | (YEK) 3
+  | | | | | [YEK ESKIMO POINT]
+  | | | | (YEN) 1
+  | | | | | [YEN ESTEVAN]
+  | | | (YET) 2
+  | | | | | [YET EDSON]
+  | | | | (YEU) 1
+  | | | | | [YEU EUREKA]
+find-larger(MAG): found [PORT MORESBY]

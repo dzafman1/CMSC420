@@ -1,0 +1,536 @@
+insert:GKA:GOROKA:GOROKA:PAPUA NEW GUINEA:-6:145
+insert:MAG:MADANG:MADANG:PAPUA NEW GUINEA:-5:145
+insert:HGU:MOUNT HAGEN:MOUNT HAGEN:PAPUA NEW GUINEA:-5:144
+insert:LAE:NADZAB:NADZAB:PAPUA NEW GUINEA:-6:146
+insert:POM:PORT MORESBY JACKSONS INTERNATIONAL:PORT MORESBY:PAPUA NEW GUINEA:-9:147
+insert:WWK:WEWAK INTERNATIONAL:WEWAK:PAPUA NEW GUINEA:-3:143
+insert:VEY:VESTMANNAEYJAR:VESTMANNAEYJAR:ICELAND:63:-20
+insert:YAM:SAULT STE MARIE:SAULT SAINTE MARIE:CANADA:46:-84
+insert:YAV:WINNIPEG ST ANDREWS:WINNIPEG:CANADA:50:-97
+insert:YAW:SHEARWATER:HALIFAX:CANADA:44:-63
+insert:YAY:ST ANTHONY:ST. ANTHONY:CANADA:51:-56
+insert:YAZ:TOFINO:TOFINO:CANADA:49:-125
+insert:YBB:KUGAARUK:PELLY BAY:CANADA:68:-89
+insert:YDQ:DAWSON CREEK:DAWSON CREEK:CANADA:55:-120
+insert:YED:EDMONTON NAMAO:EDMONTON:CANADA:53:-113
+insert:YEG:EDMONTON INTERNATIONAL:EDMONTON:CANADA:53:-113
+insert:YEK:ARVIAT:ESKIMO POINT:CANADA:61:-94
+insert:YEN:ESTEVAN:ESTEVAN:CANADA:49:-102
+insert:YET:EDSON:EDSON:CANADA:53:-116
+insert:YEU:EUREKA:EUREKA:CANADA:79:-85
+insert:YEV:INUVIK MIKE ZUBKO:INUVIK:CANADA:68:-133
+insert:YFB:IQALUIT:IQALUIT:CANADA:63:-68
+insert:YFC:FREDERICTON:FREDERICTON:CANADA:45:-66
+insert:YFO:FLIN FLON:FLIN FLON:CANADA:54:-101
+insert:YHM:HAMILTON:HAMILTON:CANADA:43:-79
+insert:YHU:ST HUBERT:MONTREAL:CANADA:45:-73
+insert:YHY:HAY RIVER:HAY RIVER:CANADA:60:-115
+insert:YHZ:HALIFAX INTERNATIONAL:HALIFAX:CANADA:44:-63
+insert:YIB:ATIKOKAN MUNI:ATIKOKAN:CANADA:48:-91
+insert:YIO:POND INLET:POND INLET:CANADA:72:-77
+insert:YJN:ST JEAN:ST. JEAN:CANADA:45:-73
+insert:YND:GATINEAU:GATINEAU:CANADA:45:-75
+insert:YNM:MATAGAMI:MATAGAMI:CANADA:49:-77
+insert:YOC:OLD CROW:OLD CROW:CANADA:67:-139
+insert:YOD:COLD LAKE:COLD LAKE:CANADA:54:-110
+insert:YOJ:HIGH LEVEL:HIGH LEVEL:CANADA:58:-117
+insert:YOW:OTTAWA MACDONALD CARTIER INTERNATIONAL:OTTAWA:CANADA:45:-75
+insert:YRM:ROCKY MOUNTAIN HOUSE:ROCKY MOUNTAIN HOUSE:CANADA:52:-114
+insert:YRT:RANKIN INLET:RANKIN INLET:CANADA:62:-92
+insert:YSB:SUDBURY:SUDBURY:CANADA:46:-80
+insert:YSC:SHERBROOKE:SHERBROOKE:CANADA:45:-71
+insert:YSJ:SAINT JOHN:ST. JOHN:CANADA:45:-65
+insert:YWA:PETAWAWA:PETAWAWA:CANADA:45:-77
+insert:YWG:WINNIPEG INTERNATIONAL:WINNIPEG:CANADA:49:-97
+insert:YWK:WABUSH:WABUSH:CANADA:52:-66
+insert:YWL:WILLIAMS LAKE:WILLIAMS LAKE:CANADA:52:-122
+insert:YWY:WRIGLEY:WRIGLEY:CANADA:63:-123
+insert:YXC:CRANBROOK:CRANBROOK:CANADA:49:-115
+insert:YYU:KAPUSKASING:KAPUSKASING:CANADA:49:-82
+insert:YYW:ARMSTRONG:ARMSTRONG:CANADA:50:-88
+insert:YYY:MONT JOLI:MONT JOLI:CANADA:48:-68
+insert:YYZ:LESTER B PEARSON INTERNATIONAL:TORONTO:CANADA:43:-79
+insert:YZD:DOWNSVIEW:TORONTO:CANADA:43:-79
+insert:CZL:MOHAMED BOUDIAF INTERNATIONAL:CONSTANTINE:ALGERIA:36:6
+insert:TEE:CHEIKH LARBI TEBESSI:TEBESSA:ALGERIA:35:8
+insert:HRM:HASSI R MEL:TILREMPT:ALGERIA:32:3
+insert:TID:BOU CHEKIF:TIARET:ALGERIA:35:1
+insert:TIN:TINDOUF:TINDOUF:ALGERIA:27:-8
+insert:QAS:ECH CHELIFF:ECH-CHELIFF:ALGERIA:36:1
+insert:TAF:TAFARAOUI:ORAN:ALGERIA:35:-0
+insert:TLM:ZENATA:TLEMCEN:ALGERIA:35:-1
+insert:ORN:ES SENIA:ORAN:ALGERIA:35:-0
+insert:MUW:GHRISS:GHRISS:ALGERIA:35:0
+insert:AZR:TOUAT CHEIKH SIDI MOHAMED BELKEBIR:ADRAR:ALGERIA:27:-0
+insert:BSK:BISKRA:BISKRA:ALGERIA:34:5
+insert:ELG:EL GOLEA:EL GOLEA:ALGERIA:30:2
+insert:GHA:NOUMERATE:GHARDAIA:ALGERIA:32:3
+insert:HME:OUED IRARA:HASSI-MESSAOUD:ALGERIA:31:6
+insert:INZ:IN SALAH:IN SALAH:ALGERIA:27:2
+insert:TGR:SIDI MAHDI:TOUGGOURT:ALGERIA:33:6
+insert:LOO:LAGHOUAT:LAGHOUAT:ALGERIA:33:2
+insert:TMX:TIMIMOUN:TIMIMOUN:ALGERIA:29:0
+insert:OGX:OUARGLA:OUARGLA:ALGERIA:31:5
+insert:IAM:IN AMENAS:ZARZAITINE:ALGERIA:28:9
+insert:COO:COTONOU CADJEHOUN:COTONOU:BENIN:6:2
+insert:PKO:PARAKOU:PARAKOU:BENIN:9:2
+insert:OUA:OUAGADOUGOU:OUAGADOUGOU:BURKINA FASO:12:-1
+insert:BOY:BOBO DIOULASSO:BOBO-DIOULASSO:BURKINA FASO:11:-4
+insert:ACC:KOTOKA INTERNATIONAL:ACCRA:GHANA:5:-0
+insert:TML:TAMALE:TAMALE:GHANA:9:-0
+insert:NYI:SUNYANI:SUNYANI:GHANA:7:-2
+insert:TKD:TAKORADI:TAKORADI:GHANA:4:-1
+insert:ABJ:ABIDJAN FELIX HOUPHOUET BOIGNY INTERNATIONAL:ABIDJAN:IVORY COAST:5:-3
+insert:BYK:BOUAKE:BOUAKE:IVORY COAST:7:-5
+insert:DJO:DALOA:DALOA:IVORY COAST:6:-6
+insert:HGO:KORHOGO:KORHOGO:IVORY COAST:9:-5
+insert:MJC:MAN:MAN:IVORY COAST:7:-7
+insert:SPY:SAN PEDRO:SAN PEDRO:IVORY COAST:4:-6
+insert:ASK:YAMOUSSOUKRO:YAMOUSSOUKRO:IVORY COAST:6:-5
+insert:ABV:ABUJA NNAMDI AZIKIWE INTERNATIONAL:ABUJA:NIGERIA:9:7
+insert:AKR:AKURE:AKURE:NIGERIA:7:5
+insert:BNI:BENIN:BENIN:NIGERIA:6:5
+insert:CBQ:CALABAR:CALABAR:NIGERIA:4:8
+insert:ENU:ENUGU:ENUGU:NIGERIA:6:7
+insert:QUS:GUSAU:GUSAU:NIGERIA:12:6
+insert:DJE:ZARZIS:DJERBA:TUNISIA:33:10
+insert:EBM:EL BORMA:EL BORMA:TUNISIA:31:9
+insert:SFA:THYNA:SFAX:TUNISIA:34:10
+insert:TOE:NEFTA:TOZEUR:TUNISIA:33:8
+insert:LRL:NIAMTOUGOU:NIATOUGOU:TOGO:9:1
+insert:LFW:LOME TOKOIN:LOME:TOGO:6:1
+insert:HHN:FRANKFURT HAHN:HAHN:GERMANY:49:7
+insert:MHG:MANNHEIM CITY:MANNHEIM:GERMANY:49:8
+insert:XFW:HAMBURG FINKENWERDER:HAMBURG:GERMANY:53:9
+insert:KEL:KIEL HOLTENAU:KIEL:GERMANY:54:10
+insert:LBC:LUBECK BLANKENSEE:LUEBECK:GERMANY:53:10
+insert:EME:EMDEN:EMDEN:GERMANY:53:7
+insert:WVN:WILHELMSHAVEN MARIENSIEL:WILHELMSHAVEN:GERMANY:53:8
+insert:BMK:BORKUM:BORKUM:GERMANY:53:6
+insert:NRD:NORDERNEY:NORDERNEY:GERMANY:53:7
+insert:GWT:WESTERLAND SYLT:WESTERLAND:GERMANY:54:8
+insert:TLL:TALLINN:TALLINN-ULEMISTE INTERNATIONAL:ESTONIA:59:24
+insert:ENF:ENONTEKIO:ENONTEKIO:FINLAND:68:23
+insert:KEV:HALLI:HALLI:FINLAND:61:24
+insert:HEM:HELSINKI MALMI:HELSINKI:FINLAND:60:25
+insert:HEL:HELSINKI VANTAA:HELSINKI:FINLAND:60:24
+insert:IVL:IVALO:IVALO:FINLAND:68:27
+insert:JOE:JOENSUU:JOENSUU:FINLAND:62:29
+insert:JYV:JYVASKYLA:JYVASKYLA:FINLAND:62:25
+insert:KAU:KAUHAVA:KAUHAVA:FINLAND:63:23
+insert:KEM:KEMI TORNIO:KEMI:FINLAND:65:24
+insert:KAJ:KAJAANI:KAJAANI:FINLAND:64:27
+insert:LDY:LONDONDERRY EGLINTON:LONDONDERRY:NORTH IRELAND:55:-7
+insert:BHX:BIRMINGHAM:BIRMINGHAM:ENGLAND:52:-1
+insert:CVT:COVENTRY:COVENTRY:ENGLAND:52:-1
+insert:GLO:GLOUCESTERSHIRE:GOLOUCHESTERSHIRE:ENGLAND:51:-2
+insert:ENA:KENAI MUNI:KENAI:USA:60:-151
+insert:FAI:FAIRBANKS INTERNATIONAL:FAIRBANKS:USA:64:-147
+insert:FBK:WAINWRIGHT AAF:FORT WAINWRIGHT:USA:64:-147
+insert:GAL:EDWARD G PITKA SR:GALENA:USA:64:-156
+insert:GKN:GULKANA:GULKANA:USA:62:-145
+insert:SGY:SKAGWAY:SKAGWAY:USA:59:-135
+insert:HOM:HOMER:HOMER:USA:59:-151
+insert:ILI:ILIAMNA:ILIAMNA:USA:59:-154
+insert:UTO:INDIAN MOUNTAIN LRRS:INDIAN MOUNTAINS:USA:65:-153
+insert:NGB:LISHE:NINBO:CHINA:29:121
+insert:NKG:LU KOU AIRPORT:NANJING:CHINA:31:118
+insert:HFE:LUOGANG:HEFEI:CHINA:31:117
+insert:TAO:LIUTING:QINGDAO:CHINA:36:120
+insert:SHA:HONGQIAO INTERNATIONAL:SHANGHAI:CHINA:31:121
+insert:YNT:LAISHAN:YANTAI:CHINA:37:121
+insert:CKG:JIANGBEI:CHONGQING:CHINA:29:106
+insert:LXA:LHASA AIRPORT:LHASA:CHINA:0:0
+insert:CTU:SHUANGLIU:CHENGDU:CHINA:30:103
+insert:XIC:QINGSHAN:XICHANG:CHINA:27:102
+insert:KHG:KASHI:KASHI:CHINA:39:76
+insert:HTN:HOTAN:HOTAN:CHINA:37:79
+insert:URC:DIWOPU:URUMQI:CHINA:43:87
+insert:HRB:TAIPING:HARBIN:CHINA:45:126
+insert:DLC:ZHOUSHUIZI:DALIAN:CHINA:38:121
+preorder
+size
+find-smaller:VEY
+find-smaller:YAM
+find-smaller:YAV
+find-smaller:YSC
+find-smaller:YSJ
+find-smaller:YWA
+find-smaller:YWG
+find-smaller:YWK
+find-smaller:TIN
+find-smaller:QAS
+find-smaller:ABJ
+find-smaller:AAA
+find-smaller:YZD
+find-smaller:ZZZ
+find-larger:TAF
+find-larger:TLM
+find-larger:ENF
+find-larger:KEV
+find-larger:LXA
+find-larger:CTU
+find-larger:XIC
+find-larger:KHG
+find-larger:HTN
+find-larger:ABJ
+find-larger:AAA
+find-larger:YZD
+find-larger:ZZZ
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+find-smaller:VEY
+find-smaller:YAM
+find-smaller:YAV
+find-smaller:YSC
+find-smaller:YSJ
+find-smaller:YWA
+find-smaller:YWG
+find-smaller:YWK
+find-smaller:TIN
+find-smaller:QAS
+find-smaller:ABJ
+find-smaller:AAA
+find-smaller:YZD
+find-smaller:ZZZ
+find-larger:TAF
+find-larger:TLM
+find-larger:ENF
+find-larger:KEV
+find-larger:LXA
+find-larger:CTU
+find-larger:XIC
+find-larger:KHG
+find-larger:HTN
+find-larger:ABJ
+find-larger:AAA
+find-larger:YZD
+find-larger:ZZZ
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+get-min
+remove-min
+preorder
+size

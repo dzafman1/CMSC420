@@ -1,0 +1,1266 @@
+...Inserting IAD
+...Entire tree after insert(IAD): 
+...[IAD Dulles]
+insert(IAD): successful {Washington Dulles International, Dulles, USA, (38.0,-77.0)}
+...Inserting BWI
+...Entire tree after insert(BWI): 
+...| [BWI Baltimore]
+...(IAD) 1
+...| [IAD Dulles]
+insert(BWI): successful {Baltimore Washington International, Baltimore, USA, (39.0,-76.0)}
+...Inserting LAX
+...Invoking skew at (IAD) 1 --> No rotation needed
+...Invoking split at (IAD) 1 --> No rotation needed
+...Entire tree after insert(LAX): 
+...| [BWI Baltimore]
+...(IAD) 1
+...| | [IAD Dulles]
+...| (LAX) 1
+...| | [LAX Los Angeles]
+insert(LAX): successful {Los Angeles International, Los Angeles, USA, (33.0,-118.0)}
+...Inserting DCA
+...Invoking skew at (IAD) 1 --> Current subtree after rotation:
+......| [BWI Baltimore]
+......(DCA) 1
+......| | [DCA Washington]
+......| (IAD) 1
+......| | | [IAD Dulles]
+......| | (LAX) 1
+......| | | [LAX Los Angeles]
+...Invoking split at (DCA) 1 --> Current subtree after rotation:
+......| | [BWI Baltimore]
+......| (DCA) 1
+......| | [DCA Washington]
+......(IAD) 2
+......| | [IAD Dulles]
+......| (LAX) 1
+......| | [LAX Los Angeles]
+...Entire tree after insert(DCA): 
+...| | [BWI Baltimore]
+...| (DCA) 1
+...| | [DCA Washington]
+...(IAD) 2
+...| | [IAD Dulles]
+...| (LAX) 1
+...| | [LAX Los Angeles]
+insert(DCA): successful {Ronald Reagan Washington National, Washington, USA, (38.0,-77.0)}
+Preorder list:
+  (IAD) 2
+  (DCA) 1
+  [BWI Baltimore]
+  [DCA Washington]
+  (LAX) 1
+  [IAD Dulles]
+  [LAX Los Angeles]
+Tree structure:
+  | | [BWI Baltimore]
+  | (DCA) 1
+  | | [DCA Washington]
+  (IAD) 2
+  | | [IAD Dulles]
+  | (LAX) 1
+  | | [LAX Los Angeles]
+size: 4
+...Deleting IAD
+...Invoking fixAfterDelete at (IAD) 2
+...Invoking updateLevel at (IAD) 2 --> Level decreases to 1 --> Current subtree:
+......| | [BWI Baltimore]
+......| (DCA) 1
+......| | [DCA Washington]
+......(IAD) 1
+......| [LAX Los Angeles]
+...Invoking skew at (IAD) 1 --> Current subtree after rotation:
+......| [BWI Baltimore]
+......(DCA) 1
+......| | [DCA Washington]
+......| (IAD) 1
+......| | [LAX Los Angeles]
+...Invoking skew at (IAD) 1 --> No rotation needed
+...Invoking skew at [LAX Los Angeles] --> No effect on external nodes
+...Invoking split at (DCA) 1 --> No rotation needed
+...Invoking split at (IAD) 1 --> No rotation needed
+...Entire tree after delete(IAD): 
+...| [BWI Baltimore]
+...(DCA) 1
+...| | [DCA Washington]
+...| (IAD) 1
+...| | [LAX Los Angeles]
+delete(IAD): successful
+Preorder list:
+  (DCA) 1
+  [BWI Baltimore]
+  (IAD) 1
+  [DCA Washington]
+  [LAX Los Angeles]
+Tree structure:
+  | [BWI Baltimore]
+  (DCA) 1
+  | | [DCA Washington]
+  | (IAD) 1
+  | | [LAX Los Angeles]
+...Deleting BWI
+...Entire tree after delete(BWI): 
+...| [DCA Washington]
+...(IAD) 1
+...| [LAX Los Angeles]
+delete(BWI): successful
+Preorder list:
+  (IAD) 1
+  [DCA Washington]
+  [LAX Los Angeles]
+Tree structure:
+  | [DCA Washington]
+  (IAD) 1
+  | [LAX Los Angeles]
+...Deleting LAX
+...Entire tree after delete(LAX): 
+...[DCA Washington]
+delete(LAX): successful
+Preorder list:
+  [DCA Washington]
+Tree structure:
+  [DCA Washington]
+...Deleting DCA
+...Entire tree after delete(DCA): Empty tree
+delete(DCA): successful
+Preorder list:
+Tree structure:
+...Deleting BWI
+delete(BWI): failure due to exception: "Deletion of nonexistent key"
+Preorder list:
+Tree structure:
+size: 0
+...Entire tree after clear: Empty tree
+clear: successful
+Preorder list:
+Tree structure:
+...Inserting JFK
+...Entire tree after insert(JFK): 
+...[JFK New York]
+insert(JFK): successful {John F Kennedy International, New York, USA, (40.0,-73.0)}
+...Inserting ATL
+...Entire tree after insert(ATL): 
+...| [ATL Atlanta]
+...(JFK) 1
+...| [JFK New York]
+insert(ATL): successful {The William B Hartsfield Atlanta International, Atlanta, USA, (33.0,-84.0)}
+...Inserting SFO
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking split at (JFK) 1 --> No rotation needed
+...Entire tree after insert(SFO): 
+...| [ATL Atlanta]
+...(JFK) 1
+...| | [JFK New York]
+...| (SFO) 1
+...| | [SFO San Francisco]
+insert(SFO): successful {San Francisco International, San Francisco, USA, (37.0,-122.0)}
+...Inserting SIN
+...Invoking skew at (SFO) 1 --> No rotation needed
+...Invoking split at (SFO) 1 --> No rotation needed
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking split at (JFK) 1 --> Current subtree after rotation:
+......| | [ATL Atlanta]
+......| (JFK) 1
+......| | [JFK New York]
+......(SFO) 2
+......| | [SFO San Francisco]
+......| (SIN) 1
+......| | [SIN Singapore]
+...Entire tree after insert(SIN): 
+...| | [ATL Atlanta]
+...| (JFK) 1
+...| | [JFK New York]
+...(SFO) 2
+...| | [SFO San Francisco]
+...| (SIN) 1
+...| | [SIN Singapore]
+insert(SIN): successful {Singapore Changi, Singapore, Singapore, (1.0,103.0)}
+Preorder list:
+  (SFO) 2
+  (JFK) 1
+  [ATL Atlanta]
+  [JFK New York]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | [ATL Atlanta]
+  | (JFK) 1
+  | | [JFK New York]
+  (SFO) 2
+  | | [SFO San Francisco]
+  | (SIN) 1
+  | | [SIN Singapore]
+...Inserting PVG
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking split at (JFK) 1 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after insert(PVG): 
+...| | [ATL Atlanta]
+...| (JFK) 1
+...| | | [JFK New York]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...(SFO) 2
+...| | [SFO San Francisco]
+...| (SIN) 1
+...| | [SIN Singapore]
+insert(PVG): successful {Shanghai Pudong International Airport, Shanghai, China, (31.0,121.0)}
+...Inserting ORD
+...Invoking skew at (PVG) 1 --> Current subtree after rotation:
+......| [JFK New York]
+......(ORD) 1
+......| | [ORD Chicago]
+......| (PVG) 1
+......| | [PVG Shanghai]
+...Invoking split at (ORD) 1 --> No rotation needed
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking split at (JFK) 1 --> Current subtree after rotation:
+......| | [ATL Atlanta]
+......| (JFK) 1
+......| | [JFK New York]
+......(ORD) 2
+......| | [ORD Chicago]
+......| (PVG) 1
+......| | [PVG Shanghai]
+...Invoking skew at (SFO) 2 --> Current subtree after rotation:
+......| | [ATL Atlanta]
+......| (JFK) 1
+......| | [JFK New York]
+......(ORD) 2
+......| | | [ORD Chicago]
+......| | (PVG) 1
+......| | | [PVG Shanghai]
+......| (SFO) 2
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Invoking split at (ORD) 2 --> No rotation needed
+...Entire tree after insert(ORD): 
+...| | [ATL Atlanta]
+...| (JFK) 1
+...| | [JFK New York]
+...(ORD) 2
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(ORD): successful {Chicago OHare International, Chicago, USA, (41.0,-87.0)}
+...Inserting DEL
+...Invoking skew at (JFK) 1 --> Current subtree after rotation:
+......| [ATL Atlanta]
+......(DEL) 1
+......| | [DEL Delhi]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking split at (DEL) 1 --> No rotation needed
+...Invoking skew at (ORD) 2 --> No rotation needed
+...Invoking split at (ORD) 2 --> No rotation needed
+...Entire tree after insert(DEL): 
+...| | [ATL Atlanta]
+...| (DEL) 1
+...| | | [DEL Delhi]
+...| | (JFK) 1
+...| | | [JFK New York]
+...(ORD) 2
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(DEL): successful {Indira Gandhi International, Delhi, India, (28.0,77.0)}
+...Inserting DXB
+...Invoking skew at (JFK) 1 --> Current subtree after rotation:
+......| [DEL Delhi]
+......(DXB) 1
+......| | [DXB Dubai]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking split at (DXB) 1 --> No rotation needed
+...Invoking skew at (DEL) 1 --> No rotation needed
+...Invoking split at (DEL) 1 --> Current subtree after rotation:
+......| | [ATL Atlanta]
+......| (DEL) 1
+......| | [DEL Delhi]
+......(DXB) 2
+......| | [DXB Dubai]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking skew at (ORD) 2 --> Current subtree after rotation:
+......| | [ATL Atlanta]
+......| (DEL) 1
+......| | [DEL Delhi]
+......(DXB) 2
+......| | | [DXB Dubai]
+......| | (JFK) 1
+......| | | [JFK New York]
+......| (ORD) 2
+......| | | | [ORD Chicago]
+......| | | (PVG) 1
+......| | | | [PVG Shanghai]
+......| | (SFO) 2
+......| | | | [SFO San Francisco]
+......| | | (SIN) 1
+......| | | | [SIN Singapore]
+...Invoking split at (DXB) 2 --> Current subtree after rotation:
+......| | | [ATL Atlanta]
+......| | (DEL) 1
+......| | | [DEL Delhi]
+......| (DXB) 2
+......| | | [DXB Dubai]
+......| | (JFK) 1
+......| | | [JFK New York]
+......(ORD) 3
+......| | | [ORD Chicago]
+......| | (PVG) 1
+......| | | [PVG Shanghai]
+......| (SFO) 2
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Entire tree after insert(DXB): 
+...| | | [ATL Atlanta]
+...| | (DEL) 1
+...| | | [DEL Delhi]
+...| (DXB) 2
+...| | | [DXB Dubai]
+...| | (JFK) 1
+...| | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(DXB): successful {Dubai International, Dubai, United Arab Emirates, (25.0,55.0)}
+Preorder list:
+  (ORD) 3
+  (DXB) 2
+  (DEL) 1
+  [ATL Atlanta]
+  [DEL Delhi]
+  (JFK) 1
+  [DXB Dubai]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | | [ATL Atlanta]
+  | | (DEL) 1
+  | | | [DEL Delhi]
+  | (DXB) 2
+  | | | [DXB Dubai]
+  | | (JFK) 1
+  | | | [JFK New York]
+  (ORD) 3
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+...Inserting ICN
+...Invoking skew at (JFK) 1 --> Current subtree after rotation:
+......| [DXB Dubai]
+......(ICN) 1
+......| | [ICN Incheon]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking split at (ICN) 1 --> No rotation needed
+...Invoking skew at (DXB) 2 --> No rotation needed
+...Invoking split at (DXB) 2 --> No rotation needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Entire tree after insert(ICN): 
+...| | | [ATL Atlanta]
+...| | (DEL) 1
+...| | | [DEL Delhi]
+...| (DXB) 2
+...| | | [DXB Dubai]
+...| | (ICN) 1
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(ICN): successful {Incheon International Airport, Incheon, South Korea, (37.0,126.0)}
+...Inserting HKG
+...Invoking skew at (ICN) 1 --> Current subtree after rotation:
+......| [DXB Dubai]
+......(HKG) 1
+......| | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking split at (HKG) 1 --> Current subtree after rotation:
+......| | [DXB Dubai]
+......| (HKG) 1
+......| | [HKG Hong Kong]
+......(ICN) 2
+......| | [ICN Incheon]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking skew at (DXB) 2 --> No rotation needed
+...Invoking split at (DXB) 2 --> No rotation needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Entire tree after insert(HKG): 
+...| | | [ATL Atlanta]
+...| | (DEL) 1
+...| | | [DEL Delhi]
+...| (DXB) 2
+...| | | | [DXB Dubai]
+...| | | (HKG) 1
+...| | | | [HKG Hong Kong]
+...| | (ICN) 2
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(HKG): successful {Hong Kong International, Hong Kong, China, (22.0,113.0)}
+...Inserting BKK
+...Invoking skew at (DEL) 1 --> Current subtree after rotation:
+......| [ATL Atlanta]
+......(BKK) 1
+......| | [BKK Bangkok]
+......| (DEL) 1
+......| | [DEL Delhi]
+...Invoking split at (BKK) 1 --> No rotation needed
+...Invoking skew at (DXB) 2 --> No rotation needed
+...Invoking split at (DXB) 2 --> No rotation needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Entire tree after insert(BKK): 
+...| | | [ATL Atlanta]
+...| | (BKK) 1
+...| | | | [BKK Bangkok]
+...| | | (DEL) 1
+...| | | | [DEL Delhi]
+...| (DXB) 2
+...| | | | [DXB Dubai]
+...| | | (HKG) 1
+...| | | | [HKG Hong Kong]
+...| | (ICN) 2
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(BKK): successful {Bangkok International, Bangkok, Thailand, (13.0,100.0)}
+...Inserting FRA
+...Invoking skew at (HKG) 1 --> Current subtree after rotation:
+......| [DXB Dubai]
+......(FRA) 1
+......| | [FRA Frankfurt]
+......| (HKG) 1
+......| | [HKG Hong Kong]
+...Invoking split at (FRA) 1 --> No rotation needed
+...Invoking skew at (ICN) 2 --> No rotation needed
+...Invoking split at (ICN) 2 --> No rotation needed
+...Invoking skew at (DXB) 2 --> No rotation needed
+...Invoking split at (DXB) 2 --> No rotation needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Entire tree after insert(FRA): 
+...| | | [ATL Atlanta]
+...| | (BKK) 1
+...| | | | [BKK Bangkok]
+...| | | (DEL) 1
+...| | | | [DEL Delhi]
+...| (DXB) 2
+...| | | | [DXB Dubai]
+...| | | (FRA) 1
+...| | | | | [FRA Frankfurt]
+...| | | | (HKG) 1
+...| | | | | [HKG Hong Kong]
+...| | (ICN) 2
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+insert(FRA): successful {Frankfurt Main, Frankfurt, Germany, (50.0,8.0)}
+Preorder list:
+  (ORD) 3
+  (DXB) 2
+  (BKK) 1
+  [ATL Atlanta]
+  (DEL) 1
+  [BKK Bangkok]
+  [DEL Delhi]
+  (ICN) 2
+  (FRA) 1
+  [DXB Dubai]
+  (HKG) 1
+  [FRA Frankfurt]
+  [HKG Hong Kong]
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | | [ATL Atlanta]
+  | | (BKK) 1
+  | | | | [BKK Bangkok]
+  | | | (DEL) 1
+  | | | | [DEL Delhi]
+  | (DXB) 2
+  | | | | [DXB Dubai]
+  | | | (FRA) 1
+  | | | | | [FRA Frankfurt]
+  | | | | (HKG) 1
+  | | | | | [HKG Hong Kong]
+  | | (ICN) 2
+  | | | | [ICN Incheon]
+  | | | (JFK) 1
+  | | | | [JFK New York]
+  (ORD) 3
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+size: 12
+find(ATL): found [Atlanta]
+...Deleting ATL
+...Invoking fixAfterDelete at (DXB) 2
+...Invoking updateLevel at (DXB) 2 --> No level changes needed
+...Invoking skew at (DXB) 2 --> No rotation needed
+...Invoking skew at (ICN) 2 --> No rotation needed
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking split at (DXB) 2 --> No rotation needed
+...Invoking split at (ICN) 2 --> No rotation needed
+...Invoking fixAfterDelete at (ORD) 3
+...Invoking updateLevel at (ORD) 3 --> No level changes needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after delete(ATL): 
+...| | | [BKK Bangkok]
+...| | (DEL) 1
+...| | | [DEL Delhi]
+...| (DXB) 2
+...| | | | [DXB Dubai]
+...| | | (FRA) 1
+...| | | | | [FRA Frankfurt]
+...| | | | (HKG) 1
+...| | | | | [HKG Hong Kong]
+...| | (ICN) 2
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(ATL): successful
+Preorder list:
+  (ORD) 3
+  (DXB) 2
+  (DEL) 1
+  [BKK Bangkok]
+  [DEL Delhi]
+  (ICN) 2
+  (FRA) 1
+  [DXB Dubai]
+  (HKG) 1
+  [FRA Frankfurt]
+  [HKG Hong Kong]
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | | [BKK Bangkok]
+  | | (DEL) 1
+  | | | [DEL Delhi]
+  | (DXB) 2
+  | | | | [DXB Dubai]
+  | | | (FRA) 1
+  | | | | | [FRA Frankfurt]
+  | | | | (HKG) 1
+  | | | | | [HKG Hong Kong]
+  | | (ICN) 2
+  | | | | [ICN Incheon]
+  | | | (JFK) 1
+  | | | | [JFK New York]
+  (ORD) 3
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+find(ATL): not found
+find(BKK): found [Bangkok]
+...Deleting BKK
+...Invoking fixAfterDelete at (DXB) 2
+...Invoking updateLevel at (DXB) 2 --> Level decreases to 1 --> Right child as well --> Current subtree:
+......| [DEL Delhi]
+......(DXB) 1
+......| | | [DXB Dubai]
+......| | (FRA) 1
+......| | | | [FRA Frankfurt]
+......| | | (HKG) 1
+......| | | | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking skew at (DXB) 1 --> No rotation needed
+...Invoking skew at (ICN) 1 --> Current subtree after rotation:
+......| [DXB Dubai]
+......(FRA) 1
+......| | | [FRA Frankfurt]
+......| | (HKG) 1
+......| | | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking skew at (ICN) 1 --> Current subtree after rotation:
+......| [FRA Frankfurt]
+......(HKG) 1
+......| | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking split at (DXB) 1 --> Current subtree after rotation:
+......| | [DEL Delhi]
+......| (DXB) 1
+......| | [DXB Dubai]
+......(FRA) 2
+......| | [FRA Frankfurt]
+......| (HKG) 1
+......| | | [HKG Hong Kong]
+......| | (ICN) 1
+......| | | | [ICN Incheon]
+......| | | (JFK) 1
+......| | | | [JFK New York]
+...Invoking split at (HKG) 1 --> Current subtree after rotation:
+......| | [FRA Frankfurt]
+......| (HKG) 1
+......| | [HKG Hong Kong]
+......(ICN) 2
+......| | [ICN Incheon]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking fixAfterDelete at (ORD) 3
+...Invoking updateLevel at (ORD) 3 --> No level changes needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after delete(BKK): 
+...| | | [DEL Delhi]
+...| | (DXB) 1
+...| | | [DXB Dubai]
+...| (FRA) 2
+...| | | | [FRA Frankfurt]
+...| | | (HKG) 1
+...| | | | [HKG Hong Kong]
+...| | (ICN) 2
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(BKK): successful
+Preorder list:
+  (ORD) 3
+  (FRA) 2
+  (DXB) 1
+  [DEL Delhi]
+  [DXB Dubai]
+  (ICN) 2
+  (HKG) 1
+  [FRA Frankfurt]
+  [HKG Hong Kong]
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | | [DEL Delhi]
+  | | (DXB) 1
+  | | | [DXB Dubai]
+  | (FRA) 2
+  | | | | [FRA Frankfurt]
+  | | | (HKG) 1
+  | | | | [HKG Hong Kong]
+  | | (ICN) 2
+  | | | | [ICN Incheon]
+  | | | (JFK) 1
+  | | | | [JFK New York]
+  (ORD) 3
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+find(BKK): not found
+find(DEL): found [Delhi]
+...Deleting DEL
+...Invoking fixAfterDelete at (FRA) 2
+...Invoking updateLevel at (FRA) 2 --> Level decreases to 1 --> Right child as well --> Current subtree:
+......| [DXB Dubai]
+......(FRA) 1
+......| | | [FRA Frankfurt]
+......| | (HKG) 1
+......| | | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking skew at (FRA) 1 --> No rotation needed
+...Invoking skew at (ICN) 1 --> Current subtree after rotation:
+......| [FRA Frankfurt]
+......(HKG) 1
+......| | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking skew at (ICN) 1 --> No rotation needed
+...Invoking split at (FRA) 1 --> Current subtree after rotation:
+......| | [DXB Dubai]
+......| (FRA) 1
+......| | [FRA Frankfurt]
+......(HKG) 2
+......| | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking split at (ICN) 1 --> No rotation needed
+...Invoking fixAfterDelete at (ORD) 3
+...Invoking updateLevel at (ORD) 3 --> No level changes needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after delete(DEL): 
+...| | | [DXB Dubai]
+...| | (FRA) 1
+...| | | [FRA Frankfurt]
+...| (HKG) 2
+...| | | [HKG Hong Kong]
+...| | (ICN) 1
+...| | | | [ICN Incheon]
+...| | | (JFK) 1
+...| | | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(DEL): successful
+Preorder list:
+  (ORD) 3
+  (HKG) 2
+  (FRA) 1
+  [DXB Dubai]
+  [FRA Frankfurt]
+  (ICN) 1
+  [HKG Hong Kong]
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | | [DXB Dubai]
+  | | (FRA) 1
+  | | | [FRA Frankfurt]
+  | (HKG) 2
+  | | | [HKG Hong Kong]
+  | | (ICN) 1
+  | | | | [ICN Incheon]
+  | | | (JFK) 1
+  | | | | [JFK New York]
+  (ORD) 3
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+find(DEL): not found
+find(DXB): found [Dubai]
+...Deleting DXB
+...Invoking fixAfterDelete at (HKG) 2
+...Invoking updateLevel at (HKG) 2 --> Level decreases to 1 --> Current subtree:
+......| [FRA Frankfurt]
+......(HKG) 1
+......| | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+...Invoking skew at (HKG) 1 --> No rotation needed
+...Invoking skew at (ICN) 1 --> No rotation needed
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking split at (HKG) 1 --> Current subtree after rotation:
+......| | [FRA Frankfurt]
+......| (HKG) 1
+......| | [HKG Hong Kong]
+......(ICN) 2
+......| | [ICN Incheon]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking split at (JFK) 1 --> No rotation needed
+...Invoking fixAfterDelete at (ORD) 3
+...Invoking updateLevel at (ORD) 3 --> No level changes needed
+...Invoking skew at (ORD) 3 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (ORD) 3 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after delete(DXB): 
+...| | | [FRA Frankfurt]
+...| | (HKG) 1
+...| | | [HKG Hong Kong]
+...| (ICN) 2
+...| | | [ICN Incheon]
+...| | (JFK) 1
+...| | | [JFK New York]
+...(ORD) 3
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(DXB): successful
+Preorder list:
+  (ORD) 3
+  (ICN) 2
+  (HKG) 1
+  [FRA Frankfurt]
+  [HKG Hong Kong]
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | | [FRA Frankfurt]
+  | | (HKG) 1
+  | | | [HKG Hong Kong]
+  | (ICN) 2
+  | | | [ICN Incheon]
+  | | (JFK) 1
+  | | | [JFK New York]
+  (ORD) 3
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+find(DXB): not found
+find(FRA): found [Frankfurt]
+...Deleting FRA
+...Invoking fixAfterDelete at (ICN) 2
+...Invoking updateLevel at (ICN) 2 --> Level decreases to 1 --> Current subtree:
+......| [HKG Hong Kong]
+......(ICN) 1
+......| | [ICN Incheon]
+......| (JFK) 1
+......| | [JFK New York]
+...Invoking skew at (ICN) 1 --> No rotation needed
+...Invoking skew at (JFK) 1 --> No rotation needed
+...Invoking skew at [JFK New York] --> No effect on external nodes
+...Invoking split at (ICN) 1 --> No rotation needed
+...Invoking split at (JFK) 1 --> No rotation needed
+...Invoking fixAfterDelete at (ORD) 3
+...Invoking updateLevel at (ORD) 3 --> Level decreases to 2 --> Current subtree:
+......| | [HKG Hong Kong]
+......| (ICN) 1
+......| | | [ICN Incheon]
+......| | (JFK) 1
+......| | | [JFK New York]
+......(ORD) 2
+......| | | [ORD Chicago]
+......| | (PVG) 1
+......| | | [PVG Shanghai]
+......| (SFO) 2
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Invoking skew at (ORD) 2 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (ORD) 2 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after delete(FRA): 
+...| | [HKG Hong Kong]
+...| (ICN) 1
+...| | | [ICN Incheon]
+...| | (JFK) 1
+...| | | [JFK New York]
+...(ORD) 2
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(FRA): successful
+Preorder list:
+  (ORD) 2
+  (ICN) 1
+  [HKG Hong Kong]
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | [HKG Hong Kong]
+  | (ICN) 1
+  | | | [ICN Incheon]
+  | | (JFK) 1
+  | | | [JFK New York]
+  (ORD) 2
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+find(FRA): not found
+find(HKG): found [Hong Kong]
+...Deleting HKG
+...Invoking fixAfterDelete at (ORD) 2
+...Invoking updateLevel at (ORD) 2 --> No level changes needed
+...Invoking skew at (ORD) 2 --> No rotation needed
+...Invoking skew at (SFO) 2 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (ORD) 2 --> No rotation needed
+...Invoking split at (SFO) 2 --> No rotation needed
+...Entire tree after delete(HKG): 
+...| | [ICN Incheon]
+...| (JFK) 1
+...| | [JFK New York]
+...(ORD) 2
+...| | | [ORD Chicago]
+...| | (PVG) 1
+...| | | [PVG Shanghai]
+...| (SFO) 2
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(HKG): successful
+Preorder list:
+  (ORD) 2
+  (JFK) 1
+  [ICN Incheon]
+  [JFK New York]
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | [ICN Incheon]
+  | (JFK) 1
+  | | [JFK New York]
+  (ORD) 2
+  | | | [ORD Chicago]
+  | | (PVG) 1
+  | | | [PVG Shanghai]
+  | (SFO) 2
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+find(HKG): not found
+find(ICN): found [Incheon]
+...Deleting ICN
+...Invoking fixAfterDelete at (ORD) 2
+...Invoking updateLevel at (ORD) 2 --> Level decreases to 1 --> Right child as well --> Current subtree:
+......| [JFK New York]
+......(ORD) 1
+......| | | [ORD Chicago]
+......| | (PVG) 1
+......| | | [PVG Shanghai]
+......| (SFO) 1
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Invoking skew at (ORD) 1 --> No rotation needed
+...Invoking skew at (SFO) 1 --> Current subtree after rotation:
+......| [ORD Chicago]
+......(PVG) 1
+......| | [PVG Shanghai]
+......| (SFO) 1
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Invoking skew at (SFO) 1 --> No rotation needed
+...Invoking split at (ORD) 1 --> Current subtree after rotation:
+......| | [JFK New York]
+......| (ORD) 1
+......| | [ORD Chicago]
+......(PVG) 2
+......| | [PVG Shanghai]
+......| (SFO) 1
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Invoking split at (SFO) 1 --> No rotation needed
+...Entire tree after delete(ICN): 
+...| | [JFK New York]
+...| (ORD) 1
+...| | [ORD Chicago]
+...(PVG) 2
+...| | [PVG Shanghai]
+...| (SFO) 1
+...| | | [SFO San Francisco]
+...| | (SIN) 1
+...| | | [SIN Singapore]
+delete(ICN): successful
+Preorder list:
+  (PVG) 2
+  (ORD) 1
+  [JFK New York]
+  [ORD Chicago]
+  (SFO) 1
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | [JFK New York]
+  | (ORD) 1
+  | | [ORD Chicago]
+  (PVG) 2
+  | | [PVG Shanghai]
+  | (SFO) 1
+  | | | [SFO San Francisco]
+  | | (SIN) 1
+  | | | [SIN Singapore]
+size: 5
+find(ICN): not found
+find(JFK): found [New York]
+...Deleting JFK
+...Invoking fixAfterDelete at (PVG) 2
+...Invoking updateLevel at (PVG) 2 --> Level decreases to 1 --> Current subtree:
+......| [ORD Chicago]
+......(PVG) 1
+......| | [PVG Shanghai]
+......| (SFO) 1
+......| | | [SFO San Francisco]
+......| | (SIN) 1
+......| | | [SIN Singapore]
+...Invoking skew at (PVG) 1 --> No rotation needed
+...Invoking skew at (SFO) 1 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking split at (PVG) 1 --> Current subtree after rotation:
+......| | [ORD Chicago]
+......| (PVG) 1
+......| | [PVG Shanghai]
+......(SFO) 2
+......| | [SFO San Francisco]
+......| (SIN) 1
+......| | [SIN Singapore]
+...Invoking split at (SIN) 1 --> No rotation needed
+...Entire tree after delete(JFK): 
+...| | [ORD Chicago]
+...| (PVG) 1
+...| | [PVG Shanghai]
+...(SFO) 2
+...| | [SFO San Francisco]
+...| (SIN) 1
+...| | [SIN Singapore]
+delete(JFK): successful
+Preorder list:
+  (SFO) 2
+  (PVG) 1
+  [ORD Chicago]
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | | [ORD Chicago]
+  | (PVG) 1
+  | | [PVG Shanghai]
+  (SFO) 2
+  | | [SFO San Francisco]
+  | (SIN) 1
+  | | [SIN Singapore]
+find(JFK): not found
+find(ORD): found [Chicago]
+...Deleting ORD
+...Invoking fixAfterDelete at (SFO) 2
+...Invoking updateLevel at (SFO) 2 --> Level decreases to 1 --> Current subtree:
+......| [PVG Shanghai]
+......(SFO) 1
+......| | [SFO San Francisco]
+......| (SIN) 1
+......| | [SIN Singapore]
+...Invoking skew at (SFO) 1 --> No rotation needed
+...Invoking skew at (SIN) 1 --> No rotation needed
+...Invoking skew at [SIN Singapore] --> No effect on external nodes
+...Invoking split at (SFO) 1 --> No rotation needed
+...Invoking split at (SIN) 1 --> No rotation needed
+...Entire tree after delete(ORD): 
+...| [PVG Shanghai]
+...(SFO) 1
+...| | [SFO San Francisco]
+...| (SIN) 1
+...| | [SIN Singapore]
+delete(ORD): successful
+Preorder list:
+  (SFO) 1
+  [PVG Shanghai]
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | [PVG Shanghai]
+  (SFO) 1
+  | | [SFO San Francisco]
+  | (SIN) 1
+  | | [SIN Singapore]
+find(ORD): not found
+find(PVG): found [Shanghai]
+...Deleting PVG
+...Entire tree after delete(PVG): 
+...| [SFO San Francisco]
+...(SIN) 1
+...| [SIN Singapore]
+delete(PVG): successful
+Preorder list:
+  (SIN) 1
+  [SFO San Francisco]
+  [SIN Singapore]
+Tree structure:
+  | [SFO San Francisco]
+  (SIN) 1
+  | [SIN Singapore]
+find(PVG): not found
+find(SFO): found [San Francisco]
+...Deleting SFO
+...Entire tree after delete(SFO): 
+...[SIN Singapore]
+delete(SFO): successful
+Preorder list:
+  [SIN Singapore]
+Tree structure:
+  [SIN Singapore]
+find(SFO): not found
+find(SIN): found [Singapore]
+...Deleting SIN
+...Entire tree after delete(SIN): Empty tree
+delete(SIN): successful
+Preorder list:
+Tree structure:
+find(SIN): not found
+find(LAX): not found
+find(JFK): not found
+size: 0
